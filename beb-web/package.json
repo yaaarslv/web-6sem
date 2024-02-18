@@ -5,6 +5,9 @@
   "author": "Savenkov Yaroslav <savenkovyaroslav53@gmail.com> (https://github.com/yaaarslv)",
   "private": true,
   "license": "UNLICENSED",
+  "engines": {
+    "node": "10.2.4"
+  },
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
