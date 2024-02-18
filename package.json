@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "author": "Savenkov Yaroslav <savenkovyaroslav53@gmail.com> (https://github.com/yaaarslv)",
-  "private": true,
+  "private": false,
   "license": "UNLICENSED",
   "engines": {
     "node": "10.2.4"
