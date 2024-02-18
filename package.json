@@ -3,10 +3,10 @@
   "version": "0.0.1",
   "description": "",
   "author": "Savenkov Yaroslav <savenkovyaroslav53@gmail.com> (https://github.com/yaaarslv)",
-  "private": false,
+  "private": true,
   "license": "UNLICENSED",
   "engines": {
-    "node": "10.2.4"
+    "node": "20.11.1"
   },
   "scripts": {
     "build": "nest build",
