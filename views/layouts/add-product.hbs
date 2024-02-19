@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords"
+          content="интернет-магазин для домашних животных, корм для животных, игрушки для питомцев, товары для ухода за животными, зоотовары">
+    <title>Petshop - добавить товар</title>
+    <link rel="icon" href="/images/logo2.jpg">
+    {{> styles}}
+    <script src="scripts/loadTime.js"></script>
+    <script src="scripts/checkAuth.js"></script>
+    <script src="scripts/checkTimeout.js"></script>
+    <script src="scripts/checkAdmin.js"></script>
+    <script src="scripts/searchScript.js"></script>
+    <!--            <link rel="stylesheet" href="/styles/outlines.css">-->
+</head>
+<body>
+<header>
+    {{>header_content}}
+    <div class="head-bar">
+        {{>search}}
+        {{>sign_in_cart}}
+        {{>head_nav_bar}}
+    </div>
+</header>
+<main>
+    <div class="add-news-form">
+        <h2>Добавить товар</h2>
+        <form id="addProductForm">
+            <div class="form-group">
+                <b><label for="product-name">Название:</label></b>
+                <textarea class="text-input" type="text" id="product-name" name="product-name" maxlength="255" placeholder="Введите название товара" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <b><label for="product-description">Описание:</label></b>
+                <textarea class="text-input" type="text" id="product-description" name="product-description" placeholder="Это поле можно оставить пустым"></textarea>
+            </div>
+
+            <div class="form-group">
+                <b><label for="product-price">Цена:</label></b>
+                <input class="text-input" type="number" id="product-price" name="product-price" step="0.01" min="1" placeholder="Введите цену товара" required>
+            </div>
+
+
+            <div class="form-group">
+                <b><label>Категория:</label></b>
+
+                <br><input type="radio" id="cat-category" name="product-category" value="Для кошек" required>
+                <label for="cat-category">Для кошек</label>
+
+                <br><input type="radio" id="dog-category" name="product-category" value="Для собак">
+                <label for="dog-category">Для собак</label>
+
+                <br><input type="radio" id="turtle-category" name="product-category" value="Для черепах">
+                <label for="turtle-category">Для черепах</label>
+
+                <br><input type="radio" id="parrot-category" name="product-category" value="Для попугаев">
+                <label for="parrot-category">Для попугаев</label>
+            </div>
+
+            <div class="form-group">
+                <b><label for="product-brand">Бренд:</label></b>
+                <textarea class="text-input" type="text" id="product-brand" name="product-brand" placeholder="Введите бренд товара" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <b><label for="product-rating">Стартовый рейтинг:</label></b>
+                <input class="text-input" type="number" id="product-rating" name="product-rating" step="0.01" min="0" max="5" placeholder="Введите рейтинг товара" required>
+            </div>
+
+            <div class="form-group">
+                <b><label for="product-count">Количество товара:</label></b>
+                <input class="text-input" type="number" id="product-count" name="product-count" step="1" min="0" placeholder="Введите количество товара" required>
+            </div>
+
+            <div class="form-group">
+                <b><label for="product-image">Фотография товара:</label></b>
+                <input type="file" id="product-image" name="product-image" accept="image/*" required>
+            </div>
+
+            <button class="send-product-button" type="submit">Добавить товар</button>
+        </form>
+
+        <script src="scripts/postProduct.js"></script>
+    </div>
+</main>
+<footer>
+    {{>quotes_code}}
+    {{>footer_bar}}
+    {{>logo}}
+</footer>
+</body>
+</html>

@@ -3,7 +3,7 @@ document.getElementById('subscriptionForm').addEventListener('submit', function 
     const emailConfirmed = localStorage.getItem("emailConfirmed");
     if (emailConfirmed === "false"){
         alert("Для подписки на уведомления подтвердите почту в личном кабинете!")
-        window.location.href = "profile.html?redirect=subscription.html"
+        window.location.href = "profile?redirect=subscription"
     } else {
         const email = localStorage.getItem("email");
         const data = {
@@ -24,7 +24,7 @@ document.getElementById('subscriptionForm').addEventListener('submit', function 
             .then(data => {
                 if (data.success) {
                     alert("Подписка оформлена!")
-                    window.location.href = 'index.html';
+                    window.location.href = 'index';
                 } else {
                     alert('Ошибка: ' + data.error);
                     subscriptionForm.classList.remove('disabled');

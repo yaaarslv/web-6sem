@@ -92,7 +92,7 @@ async function fetchAndDisplayProducts() {
 
                     addToCartButton.addEventListener('click', async function () {
                         alert("Чтобы добавить товар в корзину, нужно авторизоваться!")
-                        window.location.href = 'auth.html?redirect=catalog.html'
+                        window.location.href = 'auth?redirect=catalog'
                     });
 
                     productDiv.appendChild(imageDiv);
@@ -112,7 +112,7 @@ async function fetchAndDisplayProducts() {
                     elements.forEach((element) => {
                         element.addEventListener('click', () => {
                             const productId = product.id;
-                            window.open(`product.html?id=${productId}`);
+                            window.open(`product?id=${productId}`);
                         });
                     });
 
@@ -129,7 +129,7 @@ async function fetchAndDisplayProducts() {
                     input.value = brandName;
 
                     const label = document.createElement('label');
-                    label.htmlFor = `brand-${brandName}`;
+                    labelFor = `brand-${brandName}`;
                     label.textContent = brandName;
 
                     brandFilter.appendChild(input);
@@ -389,7 +389,7 @@ async function fetchAndDisplayProducts() {
                             elements.forEach((element) => {
                                 element.addEventListener('click', () => {
                                     const productId = product.id;
-                                    window.open(`product.html?id=${productId}`);
+                                    window.open(`product?id=${productId}`);
                                 });
                             });
 
@@ -406,7 +406,7 @@ async function fetchAndDisplayProducts() {
                             input.value = brandName;
 
                             const label = document.createElement('label');
-                            label.htmlFor = `brand-${brandName}`;
+                            labelFor = `brand-${brandName}`;
                             label.textContent = brandName;
 
                             brandFilter.appendChild(input);

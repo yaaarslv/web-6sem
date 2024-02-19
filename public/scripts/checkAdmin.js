@@ -35,11 +35,11 @@ getRoleFromServer().then(_ => {
         const isBanned = localStorage.getItem('isBanned')
         if (window.location.href.includes('add-news')) {
             if (role === "User" || isBanned === "true") {
-                window.location.href = '403.html';
+                window.location.href = '403';
             }
         } else if (window.location.href.includes('manage-news')) {
             if (role === "User" || isBanned === "true") {
-                window.location.href = '403.html';
+                window.location.href = '403';
             }
         } else if (window.location.href.includes('news')) {
             if (role === "Admin" || role === "Superadmin") {
@@ -81,11 +81,11 @@ getRoleFromServer().then(_ => {
             }
         } else if (window.location.href.includes('manage-users')) {
             if (role === "User" || role === "Admin" || isBanned === "true") {
-                window.location.href = '403.html';
+                window.location.href = '403';
             }
         } else if (window.location.href.includes('subscription') || window.location.href.includes('add-review')) {
             if (isBanned === "true") {
-                window.location.href = '403.html';
+                window.location.href = '403';
             }
         } else if (window.location.href.includes('reviews')) {
             if (isBanned === "true") {
@@ -94,11 +94,11 @@ getRoleFromServer().then(_ => {
             }
         } else if (window.location.href.includes('add-product')) {
             if (role === "User" || isBanned === "true") {
-                window.location.href = '403.html';
+                window.location.href = '403';
             }
         }  else if (window.location.href.includes('manage-products')) {
             if (role === "User" || isBanned === "true") {
-                window.location.href = '403.html';
+                window.location.href = '403';
             }
         }
     }

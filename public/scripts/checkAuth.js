@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
         authButton.textContent = 'Личный кабинет';
 
         const authForm = document.querySelector('.auth-form');
-        authForm.action = 'profile.html'
+        authForm.action = 'profile'
     } else {
         if (window.location.href.includes('reviews')){
             const button = document.querySelector('.add-review-button');
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
             window.location.href.includes('add-news')  || window.location.href.includes('add-product') ||
             window.location.href.includes('manage-products') || window.location.href.includes('manage-news') ||
             window.location.href.includes('cart')) {
-            window.location.href = `auth.html?redirect=${window.location.href.split("/").pop()}`;
+            window.location.href = `auth?redirect=${window.location.href.split("/").pop()}`;
         }
     }
 });

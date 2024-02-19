@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords"
+          content="интернет-магазин для домашних животных, корм для животных, игрушки для питомцев, товары для ухода за животными, зоотовары">
+    <title>Petshop - новости</title>
+    <link rel="icon" href="/images/logo2.jpg">
+    {{> styles}}
+    <script src="scripts/nav.js"></script>
+    <script src="scripts/loadTime.js"></script>
+    <script src="scripts/checkAuth.js"></script>
+    <script src="scripts/checkTimeout.js"></script>
+    <script src="scripts/getNews.js"></script>
+    <script src="scripts/checkAdmin.js"></script>
+    <script src="scripts/searchScript.js"></script>
+
+</head>
+<body>
+<header>
+    {{>header_content}}
+    <div class="head-bar">
+        {{>search}}
+        {{>sign_in_cart}}
+        {{>head_nav_bar}}
+    </div>
+</header>
+<main>
+    <div class="news">
+        <div class="news-head">
+            <h2>Новости:</h2>
+            <form class="addNews" action="add-news">
+            </form>
+            <form class="manageNewsForm" action="manage-news">
+            </form>
+        </div>
+
+        <div class="loader" style="display: none;">
+            <div class="running-cat-container">
+                <img class="running-cat" src="images/running-cat.gif" alt="Running Cat">
+            </div>
+            <div class="loading-text">Загрузка</div>
+        </div>
+
+        <div id="news-list">
+            <div class="error-message" style="display: none;">⚠ Что-то пошло не так</div>
+        </div>
+        <script src="scripts/loading.js"></script>
+    </div>
+</main>
+<footer>
+    {{>quotes_code}}
+    {{>footer_bar}}
+    {{>logo}}
+</footer>
+</body>
+</html>

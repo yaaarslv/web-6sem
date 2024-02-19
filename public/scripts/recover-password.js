@@ -93,7 +93,7 @@ document.getElementById('recoverForm').addEventListener('submit', function (e) {
                                     if (redirect){
                                         window.location.href = `${redirect}`;
                                     } else{
-                                        window.location.href = "auth.html";
+                                        window.location.href = "auth";
                                     }
                                 } else {
                                     alert('Ошибка: ' + data.error);

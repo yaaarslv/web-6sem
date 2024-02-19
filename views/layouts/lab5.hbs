@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords"
+          content="интернет-магазин для домашних животных, корм для животных, игрушки для питомцев, товары для ухода за животными, зоотовары">
+    <title>Petshop - lab5</title>
+    <link rel="icon" href="/images/logo2.jpg">
+    {{> styles}}
+    <script src="scripts/nav.js"></script>
+    <script src="scripts/loadTime.js"></script>
+    <script src="scripts/checkAuth.js"></script>
+    <script src="scripts/checkTimeout.js"></script>
+    <script src="scripts/searchScript.js"></script>
+    <script src="scripts/load-user-table.js"></script>
+    <!--        <link rel="stylesheet" href="/styles/outlines.css">-->
+</head>
+<body>
+<header>
+    {{>header_content}}
+    <div class="head-bar">
+        {{>search}}
+        {{>sign_in_cart}}
+        {{>head_nav_bar}}
+    </div>
+</header>
+<main>
+    <div class="loading-area" style="display: none">
+    </div>
+
+    <form id="lab5-form" class="lab5-form">
+        <div class="form-group">
+            <b><label>Количество дней:</label></b>
+
+            <br><input type="radio" id="five_days" name="days_count" value="five_days" required>
+            <label for="five_days">5 дней</label>
+
+            <br><input type="radio" id="six_days" name="days_count" value="six_days">
+            <label for="six_days">6 дней</label>
+        </div>
+
+        <div class="form-group">
+            <b><label for="max-lessons-count">Максимальное количество занятий:</label></b>
+            <input class="max-lessons-count" type="number" id="max-lessons-count" name="max-lessons-count" min="0" max="20" maxlength="255" placeholder="Введите кол-во занятий" required>
+        </div>
+
+        <button class="confirm-button" type="submit">Применить</button>
+    </form>
+
+    <div class="saving-area" style="display: none">
+    </div>
+
+    <div id="table" class="table">
+    </div>
+</main>
+<footer>
+    {{>quotes_code}}
+    {{>footer_bar}}
+    {{>logo}}
+</footer>
+</body>
+</html>

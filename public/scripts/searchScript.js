@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const inputField = searchForm.querySelector('.input');
             const search_term = inputField.value.trim();
             if (search_term !== "") {
-                window.location.href = `search-result.html?search-term=${search_term}`;
+                window.location.href = `search-result?search-term=${search_term}`;
             } else {
                 alert("Пожалуйста, введите запрос в поисковую строку.");
             }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords"
+          content="интернет-магазин для домашних животных, корм для животных, игрушки для питомцев, товары для ухода за животными, зоотовары">
+    <title>Petshop - Ошибка 404</title>
+    <link rel="icon" href="/images/logo2.jpg">
+    {{> styles}}
+    <script src="scripts/checkAuth.js"></script>
+    <script src="scripts/searchScript.js"></script>
+    <!--                <link rel="stylesheet" href="/styles/outlines.css">-->
+</head>
+<body>
+<header>
+    {{>header_content}}
+    <div class="head-bar">
+        {{>search}}
+        {{>sign_in_cart}}
+        {{>head_nav_bar}}
+    </div>
+</header>
+<main>
+    <div class="error404">
+        <h1>Ошибка 404 😿</h1>
+        <img class="404-image" src="images/grustnii-kotik-19.jpg" alt="404-image" height="600">
+        <div class="error404-text">
+            Похоже, что этой страницы здесь больше нет, а возможно, никогда и не было...
+        </div>
+        <p><a href="index">На главную страницу</a></p>
+    </div>
+</main>
+<footer>
+    {{>footer_bar}}
+    {{>logo}}
+</footer>
+</body>
+</html>

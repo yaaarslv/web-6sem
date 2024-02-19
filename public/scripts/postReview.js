@@ -9,12 +9,12 @@ function is_valid_input(input) {
 
 const token = localStorage.getItem('token');
 if (!token){
-    window.location.href = 'auth.html';
+    window.location.href = 'auth';
 }
 
 const isBanned = localStorage.getItem('isBanned');
 if (isBanned === "true") {
-    window.location.href = '403.html';
+    window.location.href = '403';
 }
 
 document.getElementById('reviewForm').addEventListener('submit', function (e) {
@@ -46,7 +46,7 @@ document.getElementById('reviewForm').addEventListener('submit', function (e) {
         .then(data => {
             if (data.success) {
                 alert("Отзыв отправлен!")
-                window.location.href = 'reviews.html';
+                window.location.href = 'reviews';
             } else {
                 alert('Ошибка: ' + data.error);
                 reviewForm.classList.remove('disabled');

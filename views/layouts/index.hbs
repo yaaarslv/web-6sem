@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords"
+          content="интернет-магазин для домашних животных, корм для животных, игрушки для питомцев, товары для ухода за животными, зоотовары">
+    <title>Petshop - главная</title>
+    <link rel="icon" href="/images/logo2.jpg">
+    <!--    <link rel="stylesheet" href="/styles/style.css">-->
+    {{> styles}}
+    <script src="scripts/loadTime.js"></script>
+    <script src="scripts/checkAuth.js"></script>
+    <script src="scripts/checkTimeout.js"></script>
+    <script src="scripts/searchScript.js"></script>
+</head>
+<body>
+<header>
+    {{>header_content}}
+    <div class="head-bar">
+        {{>search}}
+        {{>sign_in_cart}}
+        {{>head_nav_bar}}
+    </div>
+</header>
+<main>
+    <section>
+        <h2>Добро пожаловать в интернет-магазин Petshop!</h2>
+        <article>
+            На нашем сайте вы можете приобрести разнообразные товары для:
+            <ul>
+                <li>Кошек</li>
+                <li>Собак</li>
+                <li>Попугаев</li>
+                <li>Черепах</li>
+            </ul>
+        </article>
+        <article>
+            В разделе<a href="best">Лучшее</a>вы можете найти самые популярные товары нашего
+            интернет-магазина.
+        </article>
+        <article>
+            В разделе<a href="news">новости</a>вы прочитать новости нашего интернет-магазина.
+        </article>
+        <article>
+            В разделе<a href="about-us">о нас</a>вы можете найти всю интересующую вас информацию о нашем
+            интернет-магазине.
+        </article>
+        <article>
+            В разделе<a href="contacts">контакты</a>вы можете найти контакты, по которым можно связаться с
+            представителями интернет-магазина.
+        </article>
+        <article>
+            В разделе<a href="reviews">отзывы</a>вы можете найти отзывы реальных покупателей.
+        </article>
+        <article>
+            В разделе<a href="subscription">подписка на рассылку</a>вы можете подписаться на рассылку информации о
+            появлении интересующих вас товаров, акциях и скидках.
+        </article>
+        <article>
+            В разделе<a href="lab5">лабораторная 5</a>вы можете создать отдельную страницу с Web-формой, в которой с помощью предложенных параметров можете создать таблицу по шаблону.
+        </article>
+    </section>
+</main>
+<footer>
+    {{>quotes_code}}
+    {{>footer_bar}}
+    {{>logo}}
+</footer>
+</body>
+</html>

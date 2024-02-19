@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.removeItem('email')
             localStorage.removeItem('emailConfirmed')
             localStorage.removeItem('cart_id')
-            window.location.href = 'index.html';
+            window.location.href = 'index';
         });
     }
 });

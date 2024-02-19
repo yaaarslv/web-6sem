@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords"
+          content="интернет-магазин для домашних животных, корм для животных, игрушки для питомцев, товары для ухода за животными, зоотовары">
+    <title>Petshop - контакты</title>
+    <link rel="icon" href="/images/logo2.jpg">
+    {{> styles}}
+    <script src="scripts/nav.js"></script>
+    <script src="scripts/loadTime.js"></script>
+    <script src="scripts/checkAuth.js"></script>
+    <script src="scripts/checkTimeout.js"></script>
+    <script src="scripts/searchScript.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/twing/dist/lib.min.js"></script>
+    <!--        <link rel="stylesheet" href="/styles/outlines.css">-->
+</head>
+<body>
+<header>
+    {{>header_content}}
+    <div class="head-bar">
+        {{>search}}
+        {{>sign_in_cart}}
+        {{>head_nav_bar}}
+    </div>
+</header>
+<main>
+    <section>
+        <h2>Контакты:</h2>
+        <ul>
+            <li><a href="mailto:savenkovyaroslav53@gmail.com">savenkovyaroslav53@gmail.com</a></li>
+            <li><a href="tel:+79626595150">+79626595150</a></li>
+        </ul>
+    </section>
+</main>
+<footer>
+    {{>quotes_code}}
+    {{>footer_bar}}
+    {{>logo}}
+</footer>
+</body>
+</html>

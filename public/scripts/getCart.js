@@ -1,7 +1,7 @@
 async function fetchAndDisplayCart() {
     const token = localStorage.getItem('token');
     if (!token) {
-        window.location.href = 'auth.html?redirect=cart.html';
+        window.location.href = 'auth?redirect=cart';
     }
 
 
@@ -222,7 +222,7 @@ function createProductElement(product) {
     elements.forEach((element) => {
         element.addEventListener('click', () => {
             const productId = product.productId;
-            window.open(`product.html?id=${productId}`);
+            window.open(`product?id=${productId}`);
         });
     });
 

@@ -3,7 +3,7 @@ document.getElementById('unsubscriptionForm').addEventListener('submit', functio
     const emailConfirmed = localStorage.getItem("emailConfirmed");
     if (emailConfirmed === "false"){
         alert("Для отписки от уведомлений подтвердите почту в личном кабинете!")
-        window.location.href = "profile.html?redirect=cancel-subscription.html"
+        window.location.href = "profile?redirect=cancel-subscription"
     } else {
         const email = localStorage.getItem("email");
         const data = {
@@ -24,7 +24,7 @@ document.getElementById('unsubscriptionForm').addEventListener('submit', functio
             .then(data => {
                 if (data.success) {
                     alert("Подписка отменена!")
-                    window.location.href = 'index.html';
+                    window.location.href = 'index';
                 } else {
                     alert('Ошибка: ' + data.error);
                     unsubscriptionForm.classList.remove('disabled');

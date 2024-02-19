@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords"
+          content="интернет-магазин для домашних животных, корм для животных, игрушки для питомцев, товары для ухода за животными, зоотовары">
+    <title>Petshop - личный кабинет</title>
+    <link rel="icon" href="/images/logo2.jpg">
+    {{> styles}}
+    <script src="scripts/loadTime.js"></script>
+    <script src="scripts/checkAuth.js"></script>
+    <script src="scripts/checkTimeout.js"></script>
+    <script src="scripts/signOut.js"></script>
+    <script src="scripts/checkAdmin.js"></script>
+    <script src="scripts/searchScript.js"></script>
+    <script src="scripts/changePassword.js"></script>
+    <!--                <link rel="stylesheet" href="/styles/outlines.css">-->
+</head>
+<body>
+<header>
+    {{>header_content}}
+    <div class="head-bar">
+        {{>search}}
+        {{>sign_in_cart}}
+        {{>head_nav_bar}}
+    </div>
+</header>
+<main>
+    <form id="manageRoles" action="manage-users"></form>
+    <h2>Добро пожаловать в личный кабинет!</h2>
+    <div class="confirmEmail-form">
+        <h2>Подтвердить почту</h2>
+        <form id="confirmEmailForm">
+            <div class="form-group">
+                <b><label for="code">Код подтверждения:</label></b>
+                <input class="code-input" type="text" id="code" name="code" placeholder="Введите код" required>
+                <button class="send-code-button" type="button" id="sendCodeButton">Отправить код</button>
+            </div>
+
+            <button class="confirmEmail-button" type="submit">Подтвердить почту</button>
+        </form>
+        <script src="scripts/confirmEmail.js"></script>
+    </div>
+
+    <form class="change-password">
+        <button class="change-password-button" type="submit" id="changePasswordButton">Сменить пароль</button>
+    </form>
+</main>
+<footer>
+    {{>quotes_code}}
+    {{>footer_bar}}
+    {{>logo}}
+</footer>
+</body>
+</html>

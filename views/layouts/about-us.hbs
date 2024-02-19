@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords"
+          content="интернет-магазин для домашних животных, корм для животных, игрушки для питомцев, товары для ухода за животными, зоотовары">
+    <title>Petshop - о нас</title>
+    <link rel="icon" href="/images/logo2.jpg">
+    {{> styles}}
+    <script src="scripts/nav.js"></script>
+    <script src="scripts/loadTime.js"></script>
+    <script src="scripts/checkAuth.js"></script>
+    <script src="scripts/checkTimeout.js"></script>
+    <script src="scripts/searchScript.js"></script>
+    <!--        <link rel="stylesheet" href="/styles/outlines.css">-->
+</head>
+<body>
+<header>
+    {{>header_content}}
+    <div class="head-bar">
+        {{>search}}
+        {{>sign_in_cart}}
+        {{>head_nav_bar}}
+    </div>
+</header>
+<main>
+    <section>
+        <h2>О нас:</h2>
+        <p><b>История компании:</b></p>
+        <article>
+            Наш интернет-магазин "Petshop" был основан в 2023 году группой людей, страстно увлеченных животными и их
+            заботой. С тех пор мы приобрели богатый опыт и стали одним из ведущих поставщиков товаров для домашних
+            животных.
+        </article>
+
+        <p><br><b>Наша миссия:</b></p>
+        <article>
+            Мы стремимся обеспечить наших клиентов качественными и безопасными товарами для их пушистых и пернатых
+            друзей. Наша миссия - сделать заботу о домашних питомцах легкой и приятной.
+        </article>
+
+        <p><br><b>Команда:</b></p>
+        <article>
+            Наша команда состоит из опытных ветеринаров, зоологов и специалистов по обслуживанию клиентов, которые горят
+            любовью к животным и делают всё возможное, чтобы удовлетворить потребности наших клиентов.
+        </article>
+
+        <p><br><b>Качество и ответственность:</b></p>
+        <article>
+            Мы работаем только с надежными поставщиками и тщательно отбираем продукты для нашего ассортимента, чтобы
+            обеспечить высший стандарт качества.
+        </article>
+
+        <p><br><b>Партнеры и поставщики:</b></p>
+        <article>
+            Мы сотрудничаем с ведущими производителями товаров для домашних животных, такими как Royal Canin, Hill's
+            Science Diet, Kong и многими другими.
+        </article>
+    </section>
+</main>
+<footer>
+    {{>quotes_code}}
+    {{>footer_bar}}
+    {{>logo}}
+</footer>
+</body>
+</html>

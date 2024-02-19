@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords"
+          content="интернет-магазин для домашних животных, корм для животных, игрушки для питомцев, товары для ухода за животными, зоотовары">
+    <title>Petshop - корзина</title>
+    <link rel="icon" href="/images/logo2.jpg">
+    {{> styles}}
+    <script src="scripts/nav.js"></script>
+    <script src="scripts/loadTime.js"></script>
+    <script src="scripts/checkAuth.js"></script>
+    <script src="scripts/checkTimeout.js"></script>
+    <script src="scripts/searchScript.js"></script>
+    <script src="scripts/getCart.js"></script>
+
+    <!--        <link rel="stylesheet" href="/styles/outlines.css">-->
+</head>
+<body>
+<header>
+    {{>header_content}}
+    <div class="head-bar">
+        {{>search}}
+        {{>sign_in_cart}}
+        {{>head_nav_bar}}
+    </div>
+</header>
+<main>
+    <div class="cart">
+        <div class="cart-list">
+            <h2>Корзина:</h2>
+            <div class="error-message" style="display: none;">⚠ Что-то пошло не так</div>
+        </div>
+
+        <div class="loader" style="display: none;">
+            <div class="running-cat-container">
+                <img class="running-cat" src="images/running-cat.gif" alt="Running Cat">
+            </div>
+            <div class="loading-text">Загрузка</div>
+        </div>
+        <script src="scripts/loading.js"></script>
+    </div>
+</main>
+<footer>
+    {{>quotes_code}}
+    {{>footer_bar}}
+    {{>logo}}
+</footer>
+</body>
+</html>

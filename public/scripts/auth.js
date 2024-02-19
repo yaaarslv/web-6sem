@@ -33,7 +33,7 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
                 if (redirect){
                     window.location.href = `${redirect}`;
                 } else{
-                    window.location.href = "index.html";
+                    window.location.href = "index";
                 }
             } else {
                 alert('Ошибка входа: ' + data.error);

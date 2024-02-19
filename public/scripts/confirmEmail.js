@@ -71,7 +71,7 @@ document.getElementById('confirmEmailForm').addEventListener('submit', function 
                 if (redirect){
                     window.location.href = `${redirect}`;
                 } else{
-                    window.location.href = "index.html";
+                    window.location.href = "index";
                 }
             } else {
                 alert('Ошибка регистрации: ' + data.error);

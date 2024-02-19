@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords"
+          content="интернет-магазин для домашних животных, корм для животных, игрушки для питомцев, товары для ухода за животными, зоотовары">
+    <title>Petshop - найденное</title>
+    <link rel="icon" href="/images/logo2.jpg">
+    {{> styles}}
+    <script src="scripts/loadTime.js"></script>
+    <script src="scripts/checkAuth.js"></script>
+    <script src="scripts/checkTimeout.js"></script>
+    <script src="scripts/searchScript.js"></script>
+    <script src="scripts/printProductsFromSearch.js"></script>
+    <!--        <link rel="stylesheet" href="/styles/outlines.css">-->
+</head>
+<body>
+<header>
+    {{>header_content}}
+    <div class="head-bar">
+        {{>search}}
+        {{>sign_in_cart}}
+        {{>head_nav_bar}}
+    </div>
+</header>
+<main>
+    <div class="product-filter">
+        <div class="found-products">
+            <h2>По вашему запросу найдено:</h2>
+            <div class="loader" >
+                <div class="running-cat-container">
+                    <img class="running-cat" src="images/running-cat.gif" alt="Running Cat">
+                </div>
+                <div class="loading-text">Загрузка</div>
+            </div>
+
+            <div id="products-list" class="product-list">
+                <div class="error-message" style="display: none;">⚠ Что-то пошло не так</div>
+            </div>
+        </div>
+        <div class="filters">
+            <h2>Фильтры:</h2>
+            <div class="category-filters">
+                <h3>По категории:</h3>
+                <input type="checkbox" id="filter-cat">
+                <label for="filter-cat">Для кошек</label>
+
+                <br><input type="checkbox" id="filter-dog">
+                <label for="filter-dog">Для собак</label>
+
+                <br><input type="checkbox" id="filter-parrot">
+                <label for="filter-parrot">Для попугаев</label>
+
+                <br><input type="checkbox" id="filter-turtle">
+                <label for="filter-turtle">Для черепах</label>
+            </div>
+
+            <div class="price-filters">
+                <h3>По ценам:</h3>
+                <label for="minPrice">От:</label><input type="number" id="minPrice" min="0">руб.
+                <br><label for="maxPrice">До:</label><input type="number" id="maxPrice" min="0" >руб.
+            </div>
+
+            <div class="brand-filters">
+                <h3>По брендам:</h3>
+                <div class="loader" style="display: none;">
+                    <div class="running-cat-container">
+                        <img class="running-cat" src="images/running-cat.gif" alt="Running Cat">
+                    </div>
+                    <div class="loading-text">Загрузка</div>
+                </div>
+                <div id="brand-filter"></div>
+            </div>
+
+            <div class="availability-filter">
+                <h3>По доступности:</h3>
+                <input type="checkbox" id="in-stock">
+                <label for="in-stock">В наличии</label>
+
+                <br><input type="checkbox" id="out-of-stock">
+                <label for="out-of-stock">Нет в наличии</label>
+            </div>
+
+            <button class="applyFilters">Применить</button>
+            <button class="resetFiltersButton">Сбросить фильтры</button>
+        </div>
+        <script src="scripts/loading.js"></script>
+    </div>
+</main>
+<footer>
+    {{>quotes_code}}
+    {{>footer_bar}}
+    {{>logo}}
+</footer>
+</body>
+</html>

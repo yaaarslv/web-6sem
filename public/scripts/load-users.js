@@ -357,13 +357,13 @@ function cancelAddUser() {
 async function loadUserData() {
     const token = localStorage.getItem('token');
     if (!token){
-        window.location.href = 'auth.html';
+        window.location.href = 'auth';
     }
 
     const role = localStorage.getItem('role');
     const isBanned = localStorage.getItem('isBanned');
     if (role === "User" || role === "Admin" || isBanned === "true") {
-        window.location.href = '403.html';
+        window.location.href = '403';
     }
 
     const loader = document.querySelector('.loader');

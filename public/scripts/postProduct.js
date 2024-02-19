@@ -9,13 +9,13 @@ function is_valid_input(input) {
 
 const token = localStorage.getItem('token');
 if (!token){
-    window.location.href = 'auth.html';
+    window.location.href = 'auth';
 }
 
 const role = localStorage.getItem('role');
 const isBanned = localStorage.getItem('isBanned');
 if (role === "User" || isBanned === "true") {
-    window.location.href = '403.html';
+    window.location.href = '403';
 }
 
 document.getElementById('addProductForm').addEventListener('submit', function (e) {
@@ -75,7 +75,7 @@ document.getElementById('addProductForm').addEventListener('submit', function (e
         .then(data => {
             if (data.success) {
                 alert(data.message)
-                window.location.href = 'catalog.html';
+                window.location.href = 'catalog';
             } else {
                 alert('Ошибка: ' + data.error);
                 addProductForm.classList.remove('disabled');

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords"
+          content="интернет-магазин для домашних животных, корм для животных, игрушки для питомцев, товары для ухода за животными, зоотовары">
+    <title>Petshop - подписка</title>
+    <link rel="icon" href="/images/logo2.jpg">
+    {{> styles}}
+    <script src="scripts/nav.js"></script>
+    <script src="scripts/loadTime.js"></script>
+    <script src="scripts/checkAuth.js"></script>
+    <script src="scripts/checkTimeout.js"></script>
+    <script src="scripts/signOut.js"></script>
+    <script src="scripts/checkAdmin.js"></script>
+    <script src="scripts/searchScript.js"></script>
+    <!--        <link rel="stylesheet" href="/styles/outlines.css">-->
+</head>
+<body>
+<header>
+    {{>header_content}}
+    <div class="head-bar">
+        {{>search}}
+        {{>sign_in_cart}}
+        {{>head_nav_bar}}
+    </div>
+</header>
+<main>
+    <div class="subscription-form">
+        <h2>Подписка на рассылку</h2>
+        <form id="subscriptionForm">
+            <button class="subscription-button" type="submit">Подписаться</button>
+        </form>
+
+        <script src="scripts/subscript.js"></script>
+        <p class="unsubscription-link">Хотите отказаться от рассылки?</p>
+        <a href="cancel-subscription">Отписаться</a>
+    </div>
+</main>
+<footer>
+    {{>quotes_code}}
+    {{>footer_bar}}
+    {{>logo}}
+</footer>
+</body>
+</html>
