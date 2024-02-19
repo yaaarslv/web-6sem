@@ -48,19 +48,23 @@ export class AppController {
     }
   }
 
-  @Get('*')
+  @Get(':page_name.html')
   async serveHtml(@Res() res): Promise<any> {
-    const url = res.req.url;
+    const pageName = res.req.params.page_name;
+    const filePath = `${pageName}.html`;
+    const fullFilePath = path.join(__dirname, '..', 'public', filePath);
 
-    const filePath = url.split('?')[0];
-
-
-      const fullFilePath = path.join(__dirname, '..', 'public', filePath);
+    try {
+      const fileContent = await fs.promises.readFile(fullFilePath, 'utf8');
+      res.status(HttpStatus.OK).send(fileContent);
+    } catch (error) {
+      const notFoundFilePath = path.join(__dirname, '..', 'public', '404.html');
       try {
-        const fileContent = await fs.promises.readFile(fullFilePath, 'utf8');
-        res.status(HttpStatus.OK).send(fileContent);
+        const notFoundFileContent = await fs.promises.readFile(notFoundFilePath, 'utf8');
+        res.status(HttpStatus.NOT_FOUND).send(notFoundFileContent);
       } catch (error) {
         res.status(HttpStatus.NOT_FOUND).send('File not found');
       }
+    }
   }
 }
