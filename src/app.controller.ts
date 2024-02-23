@@ -22,21 +22,6 @@ export class AppController {
         );
     }
 
-    // @Get('/styles/*')
-    // async serveStyles(@Res() res): Promise<any> {
-    //     const url = res.req.url;
-    //     const filePath = path.join(__dirname, '..', 'public', url);
-    //
-    //     try {
-    //         const fileContent = await fs.promises.readFile(filePath, 'utf8');
-    //         res.setHeader('Content-Type', 'text/css');
-    //         res.status(HttpStatus.OK).send(fileContent);
-    //     } catch (error) {
-    //         res.status(HttpStatus.NOT_FOUND).send('File not found');
-    //     }
-    // }
-
-
     @Get('/images/*')
     async serveImages(@Res() res): Promise<any> {
         const url = res.req.url;
@@ -64,24 +49,4 @@ export class AppController {
             res.status(HttpStatus.NOT_FOUND).send('File not found');
         }
     }
-
-    // @Get(':page_name.html')
-    // async serveHtml(@Res() res): Promise<any> {
-    //     const pageName = res.req.params.page_name;
-    //     const filePath = `${pageName}.html`;
-    //     const fullFilePath = path.join(__dirname, '..', 'public', filePath);
-    //
-    //     try {
-    //         const fileContent = await fs.promises.readFile(fullFilePath, 'utf8');
-    //         res.status(HttpStatus.OK).send(fileContent);
-    //     } catch (error) {
-    //         const notFoundFilePath = path.join(__dirname, '..', 'public', '404.html');
-    //         try {
-    //             const notFoundFileContent = await fs.promises.readFile(notFoundFilePath, 'utf8');
-    //             res.status(HttpStatus.NOT_FOUND).send(notFoundFileContent);
-    //         } catch (error) {
-    //             res.status(HttpStatus.NOT_FOUND).send('File not found');
-    //         }
-    //     }
-    // }
 }
