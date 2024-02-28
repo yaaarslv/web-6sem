@@ -1,8 +1,10 @@
-import {Controller, Get, Res, Render, HttpStatus} from '@nestjs/common';
+import {Controller, Get, Res, Render, HttpStatus, Post, Req} from '@nestjs/common';
 import * as path from 'path';
 import * as fs from 'fs';
 import { Response } from 'express';
 import { AppService } from './app.service';
+import {User} from "./models/User";
+import bcrypt from "bcrypt";
 
 @Controller()
 export class AppController {
@@ -37,7 +39,7 @@ export class AppController {
     }
 
     @Get('/scripts/*')
-    async serveScripts(@Res() res): Promise<any> {
+    async serveScripts(@Res() res: Response): Promise<any> {
         const url = res.req.url;
         const filePath = path.join(__dirname, '..', 'public', url);
 
@@ -48,5 +50,32 @@ export class AppController {
         } catch (error) {
             res.status(HttpStatus.NOT_FOUND).send('File not found');
         }
+    }
+
+    @Post('/login/*')
+    async login(@Req() req: Request, @Res() res: Response): Promise<any> {
+        const data = req.body;
+        return this.appService.login(data);
+    }
+
+    @Get("/products/*")
+    async getManageProducts(@Req() req: Request, @Res() res: Response): Promise<any> {
+        return this.appService.getManageProducts();
+    }
+
+    @Post("/products/*")
+    async postManageProducts(@Req() req: Request, @Res() res: Response): Promise<any> {
+        return this.appService.postManageProducts(req);
+    }
+
+    @Get('/product/:productId')
+    async getProduct(@Req() req: Request, @Res() res: Response): Promise<any> {
+        const productId = parseInt(res.req.params.productId);
+        return this.appService.getProduct(productId);
+    }
+
+    @Post("/checkRoleIsBanned")
+    async checkRole(req: Request, res: Response): Promise<any> {
+        return this.appService.checkRole(req);
     }
 }
