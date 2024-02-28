@@ -21,14 +21,6 @@ export class AppController {
         );
     }
 
-    @Get(':pageName')
-    dynamicPage(@Res() res: Response) {
-        const pageName = res.req.params.pageName;
-        return res.render(
-            this.appService.getViewName(pageName)
-        );
-    }
-
     @Get('/images/*')
     async serveImages(@Res() res): Promise<any> {
         const url = res.req.url;
@@ -72,7 +64,7 @@ export class AppController {
         return;
     }
 
-    @Post("/products/*")
+    @Post("/products")
     async postManageProducts(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.appService.postManageProducts(req);
         res.json(result);
@@ -92,5 +84,13 @@ export class AppController {
         var result = await this.appService.checkRole(req);
         res.json(result);
         return;
+    }
+
+    @Get(':pageName')
+    dynamicPage(@Res() res: Response) {
+        const pageName = res.req.params.pageName;
+        return res.render(
+            this.appService.getViewName(pageName)
+        );
     }
 }
