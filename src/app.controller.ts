@@ -1,14 +1,19 @@
-import {Controller, Get, Res, Render, HttpStatus, Post, Req} from '@nestjs/common';
+import {Controller, Get, HttpStatus, Post, Req, Res} from '@nestjs/common';
 import * as path from 'path';
 import * as fs from 'fs';
-import { Response } from 'express';
-import { AppService } from './app.service';
-import {User} from "./models/User";
-import bcrypt from "bcrypt";
+import {Response} from 'express';
+import {AppService} from './app.service';
 
 @Controller()
 export class AppController {
-    constructor(private appService: AppService) {}
+    constructor(private appService: AppService) {
+    }
+
+    @Get('/loadingTime')
+    getLoadingTime() {
+        return this.appService.getTotalRequestTime();
+    }
+
     @Get()
     root(@Res() res: Response) {
         return res.render(
@@ -52,30 +57,40 @@ export class AppController {
         }
     }
 
-    @Post('/login/*')
+    @Post('/login')
     async login(@Req() req: Request, @Res() res: Response): Promise<any> {
         const data = req.body;
-        return this.appService.login(data);
+        var result = await this.appService.login(data);
+        res.json(result);
+        return;
     }
 
-    @Get("/products/*")
+    @Get("/products")
     async getManageProducts(@Req() req: Request, @Res() res: Response): Promise<any> {
-        return this.appService.getManageProducts();
+        var result = await this.appService.getManageProducts();
+        res.json(result);
+        return;
     }
 
     @Post("/products/*")
     async postManageProducts(@Req() req: Request, @Res() res: Response): Promise<any> {
-        return this.appService.postManageProducts(req);
+        var result = await this.appService.postManageProducts(req);
+        res.json(result);
+        return;
     }
 
     @Get('/product/:productId')
-    async getProduct(@Req() req: Request, @Res() res: Response): Promise<any> {
+    async getProduct(@Res() res: Response): Promise<any> {
         const productId = parseInt(res.req.params.productId);
-        return this.appService.getProduct(productId);
+        var result = await this.appService.getProduct(productId);
+        res.json(result);
+        return;
     }
 
     @Post("/checkRoleIsBanned")
-    async checkRole(req: Request, res: Response): Promise<any> {
-        return this.appService.checkRole(req);
+    async checkRole(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.appService.checkRole(req);
+        res.json(result);
+        return;
     }
 }

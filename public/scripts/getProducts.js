@@ -16,7 +16,7 @@ async function fetchAndDisplayProducts() {
         await new Promise(resolve => setTimeout(resolve, 2000));
 
         if (!cart_id) {
-            const response = await fetch('https://petshop-backend-yaaarslv.vercel.app/products');
+            const response = await fetch('https://beb-web.onrender.com/products');
             if (!response.ok) {
                 throw new Error(`Ошибка при загрузке данных: ${response.status} - ${response.statusText}`);
             }

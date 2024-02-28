@@ -5,7 +5,7 @@ async function getRoleFromServer() {
             token: token
         };
 
-        return fetch('https://petshop-backend-yaaarslv.vercel.app/checkRoleIsBanned', {
+        return fetch('https://beb-web.onrender.com/checkRoleIsBanned', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -14,7 +14,7 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
     const loginForm = document.getElementById('loginForm');
     loginForm.classList.add('disabled');
 
-    fetch('https://petshop-backend-yaaarslv.vercel.app/login', {
+    fetch('https://beb-web.onrender.com/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

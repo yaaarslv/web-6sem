@@ -13,6 +13,7 @@ let bcrypt = require('bcrypt');
 export class AppService {
     private emailHandler: Email;
     private client: any;
+    private requestTimes: number[] = [];
 
     constructor() {
         this.client = new Client({
@@ -22,6 +23,16 @@ export class AppService {
             host: 'ep-young-mode-85085940.us-west-2.aws.neon.tech',
             ssl: true
         });
+    }
+
+    public addRequestTime(time: number): void {
+        this.requestTimes.push(time);
+    }
+
+    public getTotalRequestTime(): number {
+        const sum = this.requestTimes.reduce((total, time) => total + time, 0);
+        this.requestTimes = [];
+        return sum;
     }
 
     getViewName(pageName: string): string {
@@ -85,9 +96,8 @@ export class AppService {
     async connect() {
         try {
             await this.client.connect();
-        } catch (error) {
-            console.error('Error connecting to the database:', error);
-            throw error;
+        } catch {
+            console.error('Error');
         }
     }
 
@@ -102,7 +112,7 @@ export class AppService {
             await this.client.query('ROLLBACK');
             throw error;
         } finally {
-            await this.client.end();
+            // await this.client.end();
         }
     }
 
@@ -117,7 +127,7 @@ export class AppService {
             await this.client.query('ROLLBACK');
             throw error;
         } finally {
-            await this.client.end();
+            // await this.client.end();
         }
     }
 
@@ -138,7 +148,7 @@ export class AppService {
             await this.client.query('ROLLBACK');
             throw error;
         } finally {
-            await this.client.end();
+            // await this.client.end();
         }
     }
 
@@ -159,7 +169,7 @@ export class AppService {
             await this.client.query('ROLLBACK');
             throw error;
         } finally {
-            await this.client.end();
+            // await this.client.end();
         }
     }
 
@@ -174,18 +184,19 @@ export class AppService {
             await this.client.query('ROLLBACK');
             throw error;
         } finally {
-            await this.client.end();
+            // await this.client.end();
         }
     }
 
+
     async login(data): Promise<any> {
         if ('email' in data && 'password' in data) {
+            await this.connect();
+
             const {email, password} = data;
             let correctEmail = "";
 
             try {
-                await this.connect();
-
                 const usersQuery = await this.client.query('SELECT * FROM Users');
                 const usersDb = usersQuery.rows;
 
@@ -209,8 +220,6 @@ export class AppService {
                     const cartIdQuery = await this.client.query('SELECT cart_id FROM Carts WHERE user_id = $1', [userData.id]);
                     const cartId = cartIdQuery.rows[0].cart_id;
 
-                    this.client.end();
-
                     const token = userData.token;
                     const role = userData.role;
                     const isBanned = userData.is_banned;
@@ -228,6 +237,8 @@ export class AppService {
             } catch (error) {
                 console.error('Error:', error);
                 return {success: false, error: 'Ошибка сервера'};
+            } finally {
+                // await this.client.end();
             }
         }
 
@@ -235,7 +246,7 @@ export class AppService {
     }
 
     async getManageProducts(): Promise<any> {
-        await this.client.connect();
+        await this.connect();
 
         try {
             const cursor = await this.client.query("SELECT * FROM Products ORDER BY ProductId");
@@ -259,13 +270,14 @@ export class AppService {
             console.error(error);
             return {success: false, error: 'Internal Server Error'};
         } finally {
-            this.client.end();
+            // await this.client.end();
         }
 
     }
 
     async postManageProducts(req: Request): Promise<any> {
         const data = req.body;
+        await this.connect();
 
         if ('productId' in data && 'action' in data) {
             const productId = data['productId'];
@@ -337,7 +349,7 @@ export class AppService {
                 await this.client.query('ROLLBACK');
                 return {success: false, error: 'Internal Server Error'};
             } finally {
-                this.client.end();
+                // await this.client.end();
             }
         } else if ('cart_id' in data) {
             const cart_id = data["cart_id"];
@@ -381,14 +393,14 @@ export class AppService {
                 console.error(error);
                 return {success: false, error: 'Internal Server Error'};
             } finally {
-                this.client.end();
+                // await this.client.end();
             }
         }
 
     }
 
     async getProduct(product_id: number): Promise<any> {
-        await this.client.connect();
+        await this.connect();
         try {
             const result = await this.client.query('SELECT * FROM Products WHERE ProductID = $1', [product_id]);
             const product_db = result.rows[0];
@@ -410,18 +422,18 @@ export class AppService {
             console.error(error);
             return {success: false, error: 'Попробуйте ещё раз'};
         } finally {
-            this.client.end();
+            // await this.client.end();
         }
     }
 
     async checkRole(req: Request): Promise<any> {
-        await this.client.connect();
+        await this.connect();
 
         try {
             const token = req.body["token"];
 
             if (!token) {
-                return { success: false, error: 'Неправильный запрос' };
+                return {success: false, error: 'Неправильный запрос'};
             }
 
             const userQuery = 'SELECT * FROM Users WHERE token = $1';
@@ -429,7 +441,7 @@ export class AppService {
             const userResult = await this.client.query(userQuery, userValues);
 
             if (userResult.rows.length === 0) {
-                return { success: false, error: 'Пользователь с таким токеном не найден' };
+                return {success: false, error: 'Пользователь с таким токеном не найден'};
             }
 
             const userId = userResult.rows[0].id;
@@ -437,7 +449,9 @@ export class AppService {
             const cartValues = [userId];
             const cartResult = await this.client.query(cartQuery, cartValues);
 
-            const { role, isBanned, emailConfirmed } = userResult.rows[0];
+            const role = userResult.rows[0].role;
+            const isBanned = userResult.rows[0].is_banned;
+            const emailConfirmed = userResult.rows[0].emailconfirmed;
             const cartId = cartResult.rows[0].cart_id;
             return {
                 success: true,
@@ -448,9 +462,9 @@ export class AppService {
             }
         } catch (error) {
             console.error(error);
-            return { success: false, error: 'Ошибка сервера' };
+            return {success: false, error: 'Ошибка сервера'};
         } finally {
-            this.client.end();
+            // await this.client.end();
         }
     }
 }

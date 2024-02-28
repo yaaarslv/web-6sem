@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
         loader.style.display = 'block';
         errorMessageBox.style.display = 'none';
 
-        fetch('https://petshop-backend-yaaarslv.vercel.app/product/' + product_id)
+        fetch('https://beb-web.onrender.com/product/' + product_id)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
