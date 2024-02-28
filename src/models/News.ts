@@ -1,4 +1,4 @@
-export class News {
+class News {
     private subject: any;
     private text: any;
     private date: any;

@@ -1,4 +1,4 @@
-export class Review {
+class Review {
     private author: any;
     private text: any;
     constructor(author, text) {

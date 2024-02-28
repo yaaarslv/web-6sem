@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         // descriptionDiv.textContent = `Описание: ${product.description}`;
 
                         const imageDiv = document.createElement('div');
-                        imageDiv.innerHTML = `<img class="product-image" src="${product.imageURL}" alt="Product Image">`;
+                        imageDiv.innerHTML = `<img class="product-image" src="${product.imageurl}" alt="Product Image">`;
 
                         const priceDiv = document.createElement('div');
                         priceDiv.className = 'product-price';

@@ -26,9 +26,9 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
             if (data.success) {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('role', data.role)
-                localStorage.setItem('isBanned', data.isBanned)
+                localStorage.setItem('isBanned', data.is_banned)
                 localStorage.setItem('email', email)
-                localStorage.setItem('emailConfirmed', data.emailConfirmed)
+                localStorage.setItem('emailConfirmed', data.emailconfirmed)
                 localStorage.setItem('cart_id', data.cart_id)
                 if (redirect){
                     window.location.href = `${redirect}`;

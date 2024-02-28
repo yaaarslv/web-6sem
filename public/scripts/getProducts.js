@@ -41,7 +41,7 @@ async function fetchAndDisplayProducts() {
 
 
                     const imageDiv = document.createElement('div');
-                    imageDiv.innerHTML = `<img class="product-image" src="${product.imageURL}" alt="Product Image">`;
+                    imageDiv.innerHTML = `<img class="product-image" src="${product.imageurl}" alt="Product Image">`;
                     imageDiv.addEventListener('mouseover', () => {
                         imageDiv.style.cursor = "pointer";
                     });
@@ -111,7 +111,7 @@ async function fetchAndDisplayProducts() {
 
                     elements.forEach((element) => {
                         element.addEventListener('click', () => {
-                            const productId = product.id;
+                            const productId = product.productid;
                             window.open(`product?id=${productId}`);
                         });
                     });
@@ -140,12 +140,16 @@ async function fetchAndDisplayProducts() {
                 });
             }
         } else {
-            const formData = new FormData();
-            formData.append("cart_id", cart_id);
+            const data = {
+                cart_id: cart_id
+            };
 
-            fetch('https://petshop-backend-yaaarslv.vercel.app/products', {
+            fetch('https://beb-web.onrender.com/products', {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
             })
                 .then(response => response.json())
                 .then(data => {
@@ -166,7 +170,7 @@ async function fetchAndDisplayProducts() {
                             });
 
                             const imageDiv = document.createElement('div');
-                            imageDiv.innerHTML = `<img class="product-image" src="${product.imageURL}" alt="Product Image">`;
+                            imageDiv.innerHTML = `<img class="product-image" src="${product.imageurl}" alt="Product Image">`;
                             imageDiv.addEventListener('mouseover', () => {
                                 imageDiv.style.cursor = "pointer";
                             });
@@ -340,7 +344,7 @@ async function fetchAndDisplayProducts() {
 
                             addToCartButton.addEventListener('click', async function () {
                                 const editData = {
-                                    productId: product.id,
+                                    productId: product.productid,
                                     cart_id: cart_id
                                 };
 
@@ -388,7 +392,7 @@ async function fetchAndDisplayProducts() {
 
                             elements.forEach((element) => {
                                 element.addEventListener('click', () => {
-                                    const productId = product.id;
+                                    const productId = product.productid;
                                     window.open(`product?id=${productId}`);
                                 });
                             });

@@ -1,13 +1,18 @@
 import {Injectable} from '@nestjs/common';
 import {Email} from './models/Email';
 import {randomInt} from 'crypto';
-import {User} from "./models/User";
+import {Users} from "./models/User";
 import * as path from "path";
 import {Response} from "express";
+import {InjectRepository} from "@nestjs/typeorm";
+import {Repository} from "typeorm";
+import {Products} from "./models/Products";
+import {Cart_items} from "./models/Cart_items";
 
 const {Client} = require('pg');
 
 let bcrypt = require('bcrypt');
+
 
 @Injectable()
 export class AppService {
@@ -15,7 +20,9 @@ export class AppService {
     private client: any;
     private requestTimes: number[] = [];
 
-    constructor() {
+    constructor(@InjectRepository(Users) private userRepository: Repository<Users>,
+                @InjectRepository(Products) private productRepository: Repository<Products>,
+                @InjectRepository(Cart_items) private cartItemRepository: Repository<Cart_items>) {
         this.client = new Client({
             database: 'neondb',
             user: 'yaaarslv',
@@ -194,77 +201,34 @@ export class AppService {
             await this.connect();
 
             const {email, password} = data;
-            let correctEmail = "";
 
             try {
-                const usersQuery = await this.client.query('SELECT * FROM Users');
-                const usersDb = usersQuery.rows;
+                const user = await this.userRepository.query(`SELECT * FROM Users WHERE email = $1`, [email]);
+                if (user && bcrypt.compareSync(password, user[0].password)) {
 
-                const users: User[] = usersDb.map(user => new User(
-                    user.email,
-                    user.password,
-                    user.role
-                ));
+                    const cart_id_db = await this.client.query("SELECT cart_id FROM Carts WHERE user_id = $1", [user[0].id]);
+                    var cart_id = cart_id_db.rows[0].cart_id
+                    console.log(cart_id)
 
-                for (const user of users) {
-                    if (email === user.email && bcrypt.compareSync(password, user.password)) {
-                        correctEmail = email;
-                        break;
-                    }
-                }
-
-                if (correctEmail !== "") {
-                    const result = await this.client.query('SELECT * FROM Users WHERE email = $1', [correctEmail]);
-                    const userData = result.rows[0];
-
-                    const cartIdQuery = await this.client.query('SELECT cart_id FROM Carts WHERE user_id = $1', [userData.id]);
-                    const cartId = cartIdQuery.rows[0].cart_id;
-
-                    const token = userData.token;
-                    const role = userData.role;
-                    const isBanned = userData.is_banned;
-                    const emailConfirmed = userData.emailconfirmed;
-
-                    return {
-                        success: true,
-                        token,
-                        role,
-                        isBanned,
-                        emailConfirmed,
-                        cart_id: cartId
-                    };
+                    const { token, role, is_banned, emailconfirmed } = user[0];
+                    return { success: true, token, role, is_banned, emailconfirmed, cart_id };
+                } else {
+                    return { success: false, error: 'Неверные учетные данные' };
                 }
             } catch (error) {
                 console.error('Error:', error);
-                return {success: false, error: 'Ошибка сервера'};
-            } finally {
-                // await this.client.end();
+                return { success: false, error: 'Ошибка сервера' };
             }
         }
 
-        return {success: false, error: 'Неверные учетные данные'};
+        return {success: false, error: 'Переданы не все параметры!'};
     }
 
     async getManageProducts(): Promise<any> {
-        await this.connect();
+        // await this.connect();
 
         try {
-            const cursor = await this.client.query("SELECT * FROM Products ORDER BY ProductId");
-            const products_db = cursor.rows;
-            const products = products_db.map(product => ({
-                id: product.productid,
-                name: product.name,
-                description: product.description,
-                price: product.price,
-                category: product.category,
-                brand: product.brand,
-                imageURL: product.imageurl,
-                availability: product.availability,
-                rating: product.rating,
-                count: product.count,
-                addedBy: product.addedby
-            }));
-
+            const products = await this.userRepository.query("SELECT * FROM Products ORDER BY ProductId");
             return {success: true, products};
         } catch (error) {
             console.error(error);
@@ -276,8 +240,9 @@ export class AppService {
     }
 
     async postManageProducts(req: Request): Promise<any> {
-        const data = req.body;
-        await this.connect();
+        var data = req.body;
+
+        // await this.connect();
 
         if ('productId' in data && 'action' in data) {
             const productId = data['productId'];
@@ -286,11 +251,11 @@ export class AppService {
             try {
                 if (action === "change_name") {
                     const newName = data['newName'];
-                    await this.client.query("UPDATE Products SET name = $1 WHERE productId = $2", [newName, productId]);
+                    await  this.productRepository.query("UPDATE Products SET name = $1 WHERE productId = $2", [newName, productId]);
                     return {success: true, message: `Название товар с id ${productId} изменено на ${newName}`};
                 } else if (action === "delete_product") {
-                    await this.client.query("DELETE FROM Products WHERE productId = $1", [productId]);
-                    await this.client.query("DELETE FROM Images WHERE imageId = $1", [productId]);
+                    await this.productRepository.query("DELETE FROM Products WHERE productId = $1", [productId]);
+                    await this.productRepository.query("DELETE FROM Images WHERE imageId = $1", [productId]);
                     return {success: true, message: `Товар с id ${productId} успешно удален`};
                 } else if (action === "change_price") {
                     let newPrice = data["newPrice"];
@@ -299,28 +264,28 @@ export class AppService {
                         newPrice = newPrice.replace(',', '.');
                     }
 
-                    await this.client.query("UPDATE Products SET price = $1 WHERE productId = $2", [newPrice, productId]);
+                    await this.productRepository.query("UPDATE Products SET price = $1 WHERE productId = $2", [newPrice, productId]);
                     return {
                         success: true,
                         message: `Цена товара с id ${productId} успешно изменена на ${newPrice}`
                     };
                 } else if (action === "change_category") {
                     const newCategory = data["newCategory"];
-                    await this.client.query("UPDATE Products SET category = $1 WHERE productId = $2", [newCategory, productId]);
+                    await this.productRepository.query("UPDATE Products SET category = $1 WHERE productId = $2", [newCategory, productId]);
                     return {
                         success: true,
                         message: `Категория товара с id ${productId} успешно изменена на ${newCategory}`
                     };
                 } else if (action === "change_brand") {
                     const newBrand = data["newBrand"];
-                    await this.client.query("UPDATE Products SET brand = $1 WHERE productId = $2", [newBrand, productId]);
+                    await this.productRepository.query("UPDATE Products SET brand = $1 WHERE productId = $2", [newBrand, productId]);
                     return {
                         success: true,
                         message: `Бренд товара с id ${productId} успешно изменен на ${newBrand}`
                     };
                 } else if (action === "change_count") {
                     const newCount = data["newCount"];
-                    await this.client.query("UPDATE Products SET count = $1 WHERE productId = $2", [newCount, productId]);
+                    await this.productRepository.query("UPDATE Products SET count = $1 WHERE productId = $2", [newCount, productId]);
                     return {
                         success: true,
                         message: `Количество товара с id ${productId} успешно изменено на ${newCount}`
@@ -334,7 +299,7 @@ export class AppService {
                         if (imagefile) {
                             const filename = `${productId}${path.extname(imagefile.name)}`;
                             const imageBuffer = imagefile.data;
-                            await this.client.query("UPDATE Images SET bytes = $1, extension = $2 WHERE imageid = $3", [imageBuffer, path.extname(imagefile.name), productId]);
+                            await this.productRepository.query("UPDATE Images SET bytes = $1, extension = $2 WHERE imageid = $3", [imageBuffer, path.extname(imagefile.name), productId]);
                             return {success: true, message: `Фото товара с id ${productId} успешно изменено`};
                         } else {
                             return {success: false, error: 'Файл изображения не найден'};
@@ -346,7 +311,7 @@ export class AppService {
                 }
             } catch (error) {
                 console.error(error);
-                await this.client.query('ROLLBACK');
+                await this.productRepository.query('ROLLBACK');
                 return {success: false, error: 'Internal Server Error'};
             } finally {
                 // await this.client.end();
@@ -354,33 +319,13 @@ export class AppService {
         } else if ('cart_id' in data) {
             const cart_id = data["cart_id"];
             try {
-                const productsCursor = await this.client.query("SELECT * FROM Products ORDER BY ProductId");
-                const products_db = productsCursor.rows;
-                const products = products_db.map(product => ({
-                    id: product.productid,
-                    name: product.name,
-                    description: product.description,
-                    price: product.price,
-                    category: product.category,
-                    brand: product.brand,
-                    imageURL: product.imageurl,
-                    availability: product.availability,
-                    rating: product.rating,
-                    count: product.count,
-                    addedBy: product.addedby
-                }));
+                const products = await this.productRepository.query("SELECT * FROM Products ORDER BY ProductId");
 
-                const cartItemsCursor = await this.client.query(`
-                    SELECT cart_item_id, product_id, quantity
-                    FROM cart_items
-                    WHERE cart_id = $1;
-                `, [cart_id]);
-
-                const cartItems = cartItemsCursor.rows;
+                const cartItems = await this.cartItemRepository.query(`SELECT * FROM cart_items WHERE cart_id = $1`, [cart_id]);
 
                 for (const product of products) {
                     for (const cartItem of cartItems) {
-                        if (product.id === cartItem.product_id) {
+                        if (product.productid === cartItem.product_id) {
                             product["cart_item_id"] = cartItem.cart_item_id;
                             product["quantity"] = cartItem.quantity;
                             break;
@@ -402,21 +347,8 @@ export class AppService {
     async getProduct(product_id: number): Promise<any> {
         await this.connect();
         try {
-            const result = await this.client.query('SELECT * FROM Products WHERE ProductID = $1', [product_id]);
-            const product_db = result.rows[0];
-            const product = {
-                id: product_db.productid,
-                name: product_db.name,
-                description: product_db.description,
-                price: product_db.price,
-                category: product_db.category,
-                brand: product_db.brand,
-                imageURL: product_db.imageurl,
-                availability: product_db.availability,
-                rating: product_db.rating,
-                count: product_db.count,
-                addedBy: product_db.addedby
-            };
+            const products = await this.productRepository.query('SELECT * FROM Products WHERE ProductID = $1', [product_id]);
+            const product = products[0];
             return {success: true, product};
         } catch (error) {
             console.error(error);
@@ -436,22 +368,20 @@ export class AppService {
                 return {success: false, error: 'Неправильный запрос'};
             }
 
-            const userQuery = 'SELECT * FROM Users WHERE token = $1';
-            const userValues = [token];
-            const userResult = await this.client.query(userQuery, userValues);
+            const userResult = await this.userRepository.query('SELECT * FROM Users WHERE token = $1', [token]);
 
-            if (userResult.rows.length === 0) {
+            if (userResult.length === 0) {
                 return {success: false, error: 'Пользователь с таким токеном не найден'};
             }
 
-            const userId = userResult.rows[0].id;
+            const userId = userResult[0].id;
             const cartQuery = 'SELECT cart_id FROM Carts WHERE user_id = $1';
             const cartValues = [userId];
             const cartResult = await this.client.query(cartQuery, cartValues);
 
-            const role = userResult.rows[0].role;
-            const isBanned = userResult.rows[0].is_banned;
-            const emailConfirmed = userResult.rows[0].emailconfirmed;
+            const role = userResult[0].role;
+            const isBanned = userResult[0].is_banned;
+            const emailConfirmed = userResult[0].emailconfirmed;
             const cartId = cartResult.rows[0].cart_id;
             return {
                 success: true,
