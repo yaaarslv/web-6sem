@@ -42,10 +42,6 @@ export class AppService {
         return sum;
     }
 
-    getViewName(pageName: string): string {
-        return pageName;
-    }
-
     sendCodeToEmail(recipient: string): void {
         const subject = 'Код подтверждения';
         const code = randomInt(100000, 999999);

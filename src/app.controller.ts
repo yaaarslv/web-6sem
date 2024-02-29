@@ -16,9 +16,7 @@ export class AppController {
 
     @Get()
     root(@Res() res: Response) {
-        return res.render(
-            this.appService.getViewName("index")
-        );
+        return res.render("index");
     }
 
     @Get('/images/*')
@@ -89,8 +87,6 @@ export class AppController {
     @Get(':pageName')
     dynamicPage(@Res() res: Response) {
         const pageName = res.req.params.pageName;
-        return res.render(
-            this.appService.getViewName(pageName)
-        );
+        return res.render(pageName);
     }
 }
