@@ -33,9 +33,12 @@ export class Products {
     count: number;
 
     @Column()
+    ratingcount: number;
+
+    @Column()
     addedby: string;
 
-    constructor(name: string, description: string, price: number, category: string, brand: string, imageurl: string, availability: boolean, rating: number, count: number, addedby: string) {
+    constructor(name: string, description: string, price: number, category: string, brand: string, imageurl: string, availability: boolean, rating: number, count: number, addedby: string, ratingcount: number) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -46,5 +49,6 @@ export class Products {
         this.rating = rating;
         this.count = count;
         this.addedby = addedby;
+        this.ratingcount = ratingcount;
     }
 }

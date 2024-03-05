@@ -1,8 +1,8 @@
-import nodemailer from "nodemailer";
+var nodemailer = require("nodemailer");
 
 export class Email {
-    private petshopEmail: any;
-    private petshopPassword: any;
+    private readonly petshopEmail: any;
+    private readonly petshopPassword: any;
     constructor(petshopEmail) {
         this.petshopEmail = petshopEmail;
         this.petshopPassword = 'iunazzksleioacie';
@@ -29,7 +29,8 @@ export class Email {
 
             console.log("Письмо успешно отправлено");
         } catch (error) {
-            console.error("Ошибка: Невозможно отправить сообщение");
+            console.error("Ошибка: Невозможно отправить сообщение. Подробности:");
+            console.log(error);
         }
     }
 }

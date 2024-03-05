@@ -20,12 +20,12 @@ export class Users {
     role: string;
 
     @Column()
-    is_banned: string;
+    is_banned: boolean;
 
     @Column()
-    emailconfirmed: string;
+    emailconfirmed: boolean;
 
-    constructor(email: string, password: string, role: string, is_banned: string,  emailconfirmed: string) {
+    constructor(email: string, password: string, role: string, is_banned: boolean,  emailconfirmed: boolean) {
         this.email = email;
         this.password = password;
         this.token = jwt.sign({ email: email }, 'secret_key', { algorithm: 'HS256' });

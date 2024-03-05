@@ -10,10 +10,12 @@ import {Users} from "./models/User";
 import {Cart_items} from "./models/Cart_items";
 import { MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import * as express from 'express';
+import {Carts} from "./models/Carts";
+import {Reviews} from "./models/Review";
 
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Users, Products, Cart_items]),
+    imports: [TypeOrmModule.forFeature([Users, Products, Cart_items, Carts, Reviews]),
         TypeOrmModule.forRoot({
             "type": "postgres",
             "ssl": true,
@@ -23,7 +25,7 @@ import * as express from 'express';
             "database": "neondb",
             "synchronize": false,
             "logging": false,
-            "entities": [Users, Products, Cart_items]
+            "entities": [Users, Products, Cart_items, Carts, Reviews]
         }),
     ],
     controllers: [AppController],

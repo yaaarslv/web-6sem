@@ -84,6 +84,83 @@ export class AppController {
         return;
     }
 
+    @Post("/addRate")
+    async addRate(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.appService.addRate(req);
+        res.json(result);
+        return;
+    }
+
+    @Post("/send_code")
+    async send_code(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.appService.sendCode(req);
+        res.json(result);
+        return;
+    }
+
+    @Post("/send_recover_code")
+    async send_recover_code(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.appService.sendRecoverCode(req);
+        res.json(result);
+        return;
+    }
+
+    @Post("/check_recover_code")
+    async check_recover_code(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.appService.checkRecoverCode(req);
+        res.json(result);
+        return;
+    }
+
+    @Post("/change_password")
+    async change_password(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.appService.changePassword(req);
+        res.json(result);
+        return;
+    }
+
+    @Post("/register")
+    async register(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.appService.register(req);
+        res.json(result);
+        return;
+    }
+
+    @Post("/addUser")
+    async addUser(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.appService.addUser(req);
+        res.json(result);
+        return;
+    }
+
+    @Get("/users")
+    async getManageUsers(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.appService.getManageUsers();
+        res.json(result);
+        return;
+    }
+
+    @Post("/users")
+    async postManageUsers(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.appService.postManageUsers(req);
+        res.json(result);
+        return;
+    }
+
+    @Get("/reviews")
+    async getManageReviews(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.appService.getManageReviews();
+        res.json(result);
+        return;
+    }
+
+    @Post("/reviews")
+    async postManageReviews(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.appService.postManageReviews(req);
+        res.json(result);
+        return;
+    }
+
     @Get(':pageName')
     dynamicPage(@Res() res: Response) {
         const pageName = res.req.params.pageName;
