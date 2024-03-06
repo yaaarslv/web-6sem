@@ -65,9 +65,9 @@ export class UserService {
             const cartId = cartResult.rows[0].cart_id;
             return {
                 success: true,
-                role,
-                isBanned,
-                emailConfirmed,
+                role: role,
+                is_banned: isBanned,
+                emailconfirmed: emailConfirmed,
                 cart_id: cartId,
             }
         } catch (error) {
