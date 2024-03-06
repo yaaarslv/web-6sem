@@ -13,6 +13,13 @@ import {Carts} from "./models/Carts";
 import {Reviews} from "./models/Review";
 import {News} from "./models/News";
 import {Subscribers} from "./models/Subscribers";
+import {CartService} from "./services/cartService";
+import {CartItemService} from "./services/cartItemService";
+import {NewsService} from "./services/newsService";
+import {ProductService} from "./services/productService";
+import {ReviewService} from "./services/reviewService";
+import {SubscribeService} from "./services/subscribeService";
+import {UserService} from "./services/userService";
 
 
 @Module({
@@ -31,7 +38,7 @@ import {Subscribers} from "./models/Subscribers";
     ],
     controllers: [AppController],
     providers: [
-        AppService,
+        AppService, CartService, CartItemService, NewsService, ProductService, ReviewService, SubscribeService, UserService,
         {
             provide: APP_INTERCEPTOR,
             useClass: TimingInterceptor,
@@ -42,7 +49,7 @@ import {Subscribers} from "./models/Subscribers";
 export class AppModule {
     configure(consumer: MiddlewareConsumer) {
         consumer
-            .apply(express.urlencoded({ extended: true })) // middleware для парсинга данных формы
+            .apply(express.urlencoded({ extended: true }))
             .forRoutes({ path: '/*', method: RequestMethod.ALL });
     }
 }
