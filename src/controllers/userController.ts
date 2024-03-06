@@ -105,7 +105,7 @@ export class UserController {
     @ApiResponse({status: 200, description: 'Returns all users'})
     async getManageUsers(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.userService.getManageUsers();
-        res.status(result.success ? 200 : 400).json(result);
+        res.status(200).json(result);
         return;
     }
 
