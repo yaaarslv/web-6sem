@@ -10,7 +10,10 @@ export class ReviewService {
 
     async getManageReviews(): Promise<any> {
         try {
-            const reviews = await this.reviewRepository.find();
+            const reviews = await this.reviewRepository
+                .createQueryBuilder('review')
+                .orderBy('LENGTH(review.id)')
+                .getMany();
             return {success: true, reviews};
         } catch (error) {
             console.error(error);

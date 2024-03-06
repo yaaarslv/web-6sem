@@ -14,7 +14,10 @@ export class NewsService {
 
     async getManageNews(): Promise<any> {
         try {
-            const news = await this.newsRepository.find();
+            const news = await this.newsRepository
+                .createQueryBuilder('news')
+                .orderBy('LENGTH(news.id)')
+                .getMany();
             return {success: true, news};
         } catch (error) {
             console.error(error);
