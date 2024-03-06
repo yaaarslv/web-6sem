@@ -23,7 +23,7 @@ async function fetchAndDisplayCart() {
             cart_id: cart_id
         };
 
-        return fetch('https://beb-web.onrender.com/cart', {
+        return fetch('https://beb-web.onrender.com/cart/cart', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -54,7 +54,7 @@ async function fetchAndDisplayCart() {
                                     newQuantity: quantity.textContent
                                 };
 
-                                return fetch('https://beb-web.onrender.com/changeQuantity', {
+                                return fetch('https://beb-web.onrender.com/cart/changeQuantity', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json'
@@ -90,7 +90,7 @@ async function fetchAndDisplayCart() {
                                     newQuantity: quantity.textContent
                                 };
 
-                                return fetch('https://beb-web.onrender.com/changeQuantity', {
+                                return fetch('https://beb-web.onrender.com/cart/changeQuantity', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json'
@@ -118,7 +118,7 @@ async function fetchAndDisplayCart() {
                                 cartProductId: cartProductId,
                             };
 
-                            return fetch('https://beb-web.onrender.com/deleteCartProduct', {
+                            return fetch('https://beb-web.onrender.com/cart/deleteCartProduct', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'

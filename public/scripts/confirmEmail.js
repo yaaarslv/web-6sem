@@ -15,7 +15,7 @@ document.getElementById('sendCodeButton').addEventListener('click', function () 
         const code_button = document.getElementById("sendCodeButton")
         code_button.disabled = true;
 
-        fetch('https://beb-web.onrender.com/send_code', {
+        fetch('https://beb-web.onrender.com/app/send_code', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -56,7 +56,7 @@ document.getElementById('confirmEmailForm').addEventListener('submit', function 
     const confirmEmailForm = document.getElementById('confirmEmailForm');
     confirmEmailForm.classList.add('disabled');
 
-    fetch('https://beb-web.onrender.com/confirmEmail', {
+    fetch('https://beb-web.onrender.com/user/confirmEmail', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

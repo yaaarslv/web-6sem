@@ -6,7 +6,7 @@
         var loadTime = (endTime - startTime) / 1000;
 
         new Promise(resolve => setTimeout(resolve, 3000)).then(r => {
-            fetch('https://beb-web.onrender.com/loadingTime')
+            fetch('https://beb-web.onrender.com/app/loadingTime')
                 .then(response => response.json())
                 .then(data => {
                     var serverProcessingTime = data / 1000;

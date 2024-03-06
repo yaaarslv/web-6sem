@@ -9,7 +9,7 @@ document.getElementById('sendCodeButton').addEventListener('click', function () 
         const code_button = document.getElementById("sendCodeButton")
         code_button.disabled = true;
 
-        fetch('https://beb-web.onrender.com/send_code', {
+        fetch('https://beb-web.onrender.com/app/send_code', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -49,7 +49,7 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
     const registerForm = document.getElementById('registerForm');
     registerForm.classList.add('disabled');
 
-    fetch('https://beb-web.onrender.com/registration', {
+    fetch('https://beb-web.onrender.com/user/registration', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

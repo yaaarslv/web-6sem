@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         errorMessageBox.style.display = 'none';
 
-        fetch('https://beb-web.onrender.com/search/' + search_term)
+        fetch('https://beb-web.onrender.com/product/search/' + search_term)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         newQuantity: quantity.textContent
                                     };
 
-                                    return fetch('https://beb-web.onrender.com/changeQuantity', {
+                                    return fetch('https://beb-web.onrender.com/cart/changeQuantity', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json'
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         newQuantity: quantity.textContent
                                     };
 
-                                    return fetch('https://beb-web.onrender.com/changeQuantity', {
+                                    return fetch('https://beb-web.onrender.com/cart/changeQuantity', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json'
@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     cartProductId: cartItemIdDiv.textContent,
                                 };
 
-                                return fetch('https://beb-web.onrender.com/deleteCartProduct', {
+                                return fetch('https://beb-web.onrender.com/cart/deleteCartProduct', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json'
@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     cart_id: cart_id
                                 };
 
-                                return fetch('https://beb-web.onrender.com/addProductToCart', {
+                                return fetch('https://beb-web.onrender.com/cart/addProductToCart', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json'

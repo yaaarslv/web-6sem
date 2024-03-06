@@ -5,7 +5,7 @@ async function getRoleFromServer() {
             token: token
         };
 
-        return fetch('https://beb-web.onrender.com/checkRoleIsBanned', {
+        return fetch('https://beb-web.onrender.com/user/checkRoleIsBanned', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -35,7 +35,7 @@ document.getElementById('reviewForm').addEventListener('submit', function (e) {
     const reviewForm = document.getElementById('reviewForm');
     reviewForm.classList.add('disabled');
 
-    fetch('https://beb-web.onrender.com/postReviews', {
+    fetch('https://beb-web.onrender.com/review/postReviews', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

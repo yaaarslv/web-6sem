@@ -55,7 +55,7 @@ async function changeName(productId) {
         formData.append("productId", productId);
         formData.append("action", "change_name");
 
-        await fetch(`https://beb-web.onrender.com/products`, {
+        await fetch(`https://beb-web.onrender.com/product/products`, {
             method: 'POST',
             body: formData
         }).then(response => response.json())
@@ -123,7 +123,7 @@ async function changePrice(productId) {
         formData.append("productId", productId);
         formData.append("action", "change_price");
 
-        await fetch(`https://beb-web.onrender.com/products`, {
+        await fetch(`https://beb-web.onrender.com/product/products`, {
             method: 'POST',
             body: formData
         }).then(response => response.json())
@@ -195,7 +195,7 @@ async function changeCategory(productId) {
         formData.append("productId", productId);
         formData.append("action", "change_category");
 
-        await fetch(`https://beb-web.onrender.com/products`, {
+        await fetch(`https://beb-web.onrender.com/product/products`, {
             method: 'POST',
             body: formData
         }).then(response => response.json())
@@ -263,7 +263,7 @@ async function changeBrand(productId) {
         formData.append("productId", productId);
         formData.append("action", "change_brand");
 
-        await fetch(`https://beb-web.onrender.com/products`, {
+        await fetch(`https://beb-web.onrender.com/product/products`, {
             method: 'POST',
             body: formData
         }).then(response => response.json())
@@ -336,7 +336,7 @@ async function changeCount(productId) {
         formData.append("productId", productId);
         formData.append("action", "change_count");
 
-        await fetch(`https://beb-web.onrender.com/products`, {
+        await fetch(`https://beb-web.onrender.com/product/products`, {
             method: 'POST',
             body: formData
         }).then(response => response.json())
@@ -402,7 +402,7 @@ async function changeImage(productId) {
         formData.append("productId", productId);
         formData.append("action", "change_image");
 
-        await fetch(`https://petshop-backend-yaaarslv.vercel.app/products`, {
+        await fetch(`https://petshop-backend-yaaarslv.vercel.app/product/products`, {
             method: 'POST',
             body: formData
         }).then(response => response.json())
@@ -477,7 +477,7 @@ async function deleteProduct(productId) {
             formData.append("productId", productId);
             formData.append("action", "delete_product");
 
-            await fetch(`https://beb-web.onrender.com/products`, {
+            await fetch(`https://beb-web.onrender.com/product/products`, {
                 method: 'POST',
                 body: formData
             }).then(response => response.json())
@@ -534,7 +534,7 @@ async function loadProductsData() {
 
     try {
         loader.style.display = 'block';
-        const response = await fetch('https://beb-web.onrender.com/products');
+        const response = await fetch('https://beb-web.onrender.com/product/products');
         if (!response.ok) {
             throw new Error('Ошибка при загрузке данных');
         }

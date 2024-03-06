@@ -13,7 +13,7 @@ document.getElementById('unsubscriptionForm').addEventListener('submit', functio
         const unsubscriptionForm = document.getElementById('unsubscriptionForm');
         unsubscriptionForm.classList.add('disabled');
 
-        fetch('https://beb-web.onrender.com/unsubscript', {
+        fetch('https://beb-web.onrender.com/subscribe/unsubscript', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

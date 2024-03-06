@@ -13,7 +13,7 @@ document.getElementById('subscriptionForm').addEventListener('submit', function 
         const subscriptionForm = document.getElementById('subscriptionForm');
         subscriptionForm.classList.add('disabled');
 
-        fetch('https://beb-web.onrender.com/subscript', {
+        fetch('https://beb-web.onrender.com/subscribe/subscript', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

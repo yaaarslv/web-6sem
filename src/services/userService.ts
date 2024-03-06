@@ -21,7 +21,7 @@ export class UserService {
                 const user = await this.userRepository.query(`SELECT *
                                                               FROM Users
                                                               WHERE email = $1`, [email]);
-                if (user && bcrypt.compareSync(password, user[0].password)) {
+                if (user.length > 0 && bcrypt.compareSync(password, user[0].password)) {
 
                     const cart_id_db = await this.cartsRepository.findOneBy({user_id: user[0].id})
                     var cart_id = cart_id_db.cart_id

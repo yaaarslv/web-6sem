@@ -16,7 +16,7 @@ async function fetchAndDisplayProducts() {
         await new Promise(resolve => setTimeout(resolve, 2000));
 
         if (!cart_id) {
-            const response = await fetch('https://beb-web.onrender.com/products');
+            const response = await fetch('https://beb-web.onrender.com/product/products');
             if (!response.ok) {
                 throw new Error(`Ошибка при загрузке данных: ${response.status} - ${response.statusText}`);
             }
@@ -144,7 +144,7 @@ async function fetchAndDisplayProducts() {
                 cart_id: cart_id
             };
 
-            fetch('https://beb-web.onrender.com/products', {
+            fetch('https://beb-web.onrender.com/product/products', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -261,7 +261,7 @@ async function fetchAndDisplayProducts() {
                                         newQuantity: quantity.textContent
                                     };
 
-                                    return fetch('https://beb-web.onrender.com/changeQuantity', {
+                                    return fetch('https://beb-web.onrender.com/cart/changeQuantity', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json'
@@ -297,7 +297,7 @@ async function fetchAndDisplayProducts() {
                                         newQuantity: quantity.textContent
                                     };
 
-                                    return fetch('https://beb-web.onrender.com/changeQuantity', {
+                                    return fetch('https://beb-web.onrender.com/cart/changeQuantity', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json'
@@ -324,7 +324,7 @@ async function fetchAndDisplayProducts() {
                                     cartProductId: cartItemIdDiv.textContent,
                                 };
 
-                                return fetch('https://beb-web.onrender.com/deleteCartProduct', {
+                                return fetch('https://beb-web.onrender.com/cart/deleteCartProduct', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json'
@@ -348,7 +348,7 @@ async function fetchAndDisplayProducts() {
                                     cart_id: cart_id
                                 };
 
-                                return fetch('https://beb-web.onrender.com/addProductToCart', {
+                                return fetch('https://beb-web.onrender.com/cart/addProductToCart', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json'

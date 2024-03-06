@@ -1,5 +1,5 @@
 import {Module} from '@nestjs/common';
-import {AppController} from './app.controller';
+import {AppController} from './controllers/app.controller';
 import {AppService} from './app.service';
 import {APP_INTERCEPTOR} from '@nestjs/core';
 import {TimingInterceptor} from './response-time.interceptor';
@@ -20,6 +20,12 @@ import {ProductService} from "./services/productService";
 import {ReviewService} from "./services/reviewService";
 import {SubscribeService} from "./services/subscribeService";
 import {UserService} from "./services/userService";
+import {CartController} from "./controllers/cartController";
+import {NewsController} from "./controllers/newsController";
+import {ProductController} from "./controllers/productController";
+import {ReviewController} from "./controllers/reviewController";
+import {SubscribeController} from "./controllers/subscribeController";
+import {UserController} from "./controllers/userController";
 
 
 @Module({
@@ -36,7 +42,7 @@ import {UserService} from "./services/userService";
             "entities": [Users, Products, Cart_items, Carts, Reviews, News, Subscribers]
         }),
     ],
-    controllers: [AppController],
+    controllers: [AppController, CartController, NewsController, ProductController, ReviewController, SubscribeController, UserController],
     providers: [
         AppService, CartService, CartItemService, NewsService, ProductService, ReviewService, SubscribeService, UserService,
         {
