@@ -13,7 +13,7 @@ export class ReviewController {
     @ApiResponse({status: 200, description: 'Returns all reviews'})
     async getManageReviews(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.reviewService.getManageReviews();
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 
@@ -31,7 +31,7 @@ export class ReviewController {
     @ApiResponse({status: 400, description: 'Error during operation'})
     async postManageReviews(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.reviewService.postManageReviews(req);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 }

@@ -23,7 +23,7 @@ export class UserController {
     async login(@Req() req: Request, @Res() res: Response): Promise<any> {
         const data = req.body;
         var result = await this.userService.login(data);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 
@@ -41,7 +41,7 @@ export class UserController {
     @ApiResponse({status: 400, description: 'Invalid token'})
     async checkRole(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.userService.checkRole(req);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 
@@ -59,7 +59,7 @@ export class UserController {
     @ApiResponse({ status: 400, description: 'Invalid email, password or other error' })
     async change_password(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.userService.changePassword(req);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 
@@ -78,7 +78,7 @@ export class UserController {
     @ApiResponse({ status: 400, description: 'Invalid email, password, code or other error' })
     async register(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.userService.register(req);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 
@@ -96,7 +96,7 @@ export class UserController {
     @ApiResponse({ status: 400, description: 'Invalid email, password or other error' })
     async addUser(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.userService.addUser(req);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 
@@ -105,7 +105,7 @@ export class UserController {
     @ApiResponse({status: 200, description: 'Returns all users'})
     async getManageUsers(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.userService.getManageUsers();
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 
@@ -123,7 +123,7 @@ export class UserController {
     @ApiResponse({status: 400, description: 'Error during operation'})
     async postManageUsers(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.userService.postManageUsers(req);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 
@@ -141,7 +141,7 @@ export class UserController {
     @ApiResponse({ status: 400, description: 'Invalid email, code or other error' })
     async confirmEmail(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.userService.confirmEmail(req);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 }

@@ -21,7 +21,7 @@ export class CartController {
     @ApiResponse({status: 400, description: 'Error during operation'})
     async cart(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.cartItemService.cart(req);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 
@@ -39,7 +39,7 @@ export class CartController {
     @ApiResponse({ status: 400, description: 'Error during operation' })
     async changeQuantity(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.cartItemService.changeQuantity(req);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 
@@ -56,7 +56,7 @@ export class CartController {
     @ApiResponse({status: 400, description: 'Error during operation'})
     async deleteCartProduct(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.cartItemService.deleteCartProduct(req);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 
@@ -74,7 +74,7 @@ export class CartController {
     @ApiResponse({ status: 400, description: 'Error during operation' })
     async addProductToCart(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.cartItemService.addProductToCart(req);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 }

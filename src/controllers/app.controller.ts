@@ -15,14 +15,7 @@ import {ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags} from "@nestjs/swa
 @ApiTags('app')
 @Controller("/app")
 export class AppController {
-    constructor(private appService: AppService,
-                private cartItemService: CartItemService,
-                private cartService: CartService,
-                private newsService: NewsService,
-                private productService: ProductService,
-                private reviewService: ReviewService,
-                private userService: UserService,
-                private subscribeService: SubscribeService) {
+    constructor(private appService: AppService) {
     }
 
     @Get('/loadingTime')
@@ -39,38 +32,6 @@ export class AppController {
         return res.redirect("index");
     }
 
-    @Get('/images/*')
-    @ApiOperation({summary: 'Get image by url'})
-    @ApiResponse({status: 200, description: 'Returns image'})
-    async serveImages(@Res() res): Promise<any> {
-        const url = res.req.url;
-        const filePath = path.join(__dirname, '..', 'public', url);
-
-        try {
-            const fileStream = fs.createReadStream(filePath);
-            res.writeHead(200, {'Content-Type': 'application/octet-stream'});
-            fileStream.pipe(res);
-        } catch (error) {
-            res.status(HttpStatus.NOT_FOUND).send('File not found');
-        }
-    }
-
-    @Get('/scripts/*')
-    @ApiOperation({summary: 'Get script content'})
-    @ApiResponse({status: 200, description: 'Returns script content'})
-    async serveScripts(@Res() res: Response): Promise<any> {
-        const url = res.req.url;
-        const filePath = path.join(__dirname, '..', 'public', url);
-
-        try {
-            const fileContent = await fs.promises.readFile(filePath, 'utf8');
-            res.setHeader('Content-Type', 'text/javascript');
-            res.status(HttpStatus.OK).send(fileContent);
-        } catch (error) {
-            res.status(HttpStatus.NOT_FOUND).send('File not found');
-        }
-    }
-
     @Post("/send_code")
     @ApiOperation({summary: 'Send code'})
     @ApiBody({
@@ -85,7 +46,7 @@ export class AppController {
     @ApiResponse({status: 400, description: 'Invalid recipient or other error'})
     async send_code(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.appService.sendCode(req);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 
@@ -103,7 +64,7 @@ export class AppController {
     @ApiResponse({status: 400, description: 'Invalid recipient or other error'})
     async send_recover_code(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.appService.sendRecoverCode(req);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 
@@ -121,7 +82,7 @@ export class AppController {
     @ApiResponse({status: 400, description: 'Invalid email, recovery code or other error'})
     async check_recover_code(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.appService.checkRecoverCode(req);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 

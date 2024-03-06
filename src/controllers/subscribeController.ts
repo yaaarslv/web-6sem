@@ -21,7 +21,7 @@ export class SubscribeController {
     @ApiResponse({status: 400, description: 'Error during operation'})
     async subscript(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.subscribeService.subscript(req);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 
@@ -38,7 +38,7 @@ export class SubscribeController {
     @ApiResponse({status: 400, description: 'Error during operation'})
     async unsubscript(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.subscribeService.unsubscript(req);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 }

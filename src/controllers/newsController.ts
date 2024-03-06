@@ -13,7 +13,7 @@ export class NewsController {
     @ApiResponse({status: 200, description: 'Returns all news'})
     async getManageNews(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.newsService.getManageNews();
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 
@@ -31,7 +31,7 @@ export class NewsController {
     @ApiResponse({status: 400, description: 'Error during operation'})
     async postManageNews(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.newsService.postManageNews(req);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 }

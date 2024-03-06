@@ -13,7 +13,7 @@ export class ProductController {
     @ApiResponse({status: 200, description: 'Returns all products'})
     async getManageProducts(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.productService.getManageProducts();
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 
@@ -31,7 +31,7 @@ export class ProductController {
     @ApiResponse({status: 400, description: 'Error during operation'})
     async postManageProducts(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.productService.postManageProducts(req);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 
@@ -43,7 +43,7 @@ export class ProductController {
     async getProduct(@Res() res: Response): Promise<any> {
         const productId = parseInt(res.req.params.productId);
         var result = await this.productService.getProduct(productId);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 
@@ -61,7 +61,7 @@ export class ProductController {
     @ApiResponse({status: 400, description: 'Error during operation'})
     async addRate(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.productService.addRate(req);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 
@@ -73,7 +73,7 @@ export class ProductController {
     async search(@Res() res: Response): Promise<any> {
         const search_term = res.req.params.search_term;
         var result = await this.productService.search(search_term);
-        res.json(result);
+        res.status(result.success ? 200 : 400).json(result);
         return;
     }
 }
