@@ -62,7 +62,7 @@ export class UserService {
             const role = userResult[0].role;
             const isBanned = userResult[0].is_banned;
             const emailConfirmed = userResult[0].emailconfirmed;
-            const cartId = cartResult.rows[0].cart_id;
+            const cartId = cartResult[0].cart_id;
             return {
                 success: true,
                 role: role,
