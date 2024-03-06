@@ -56,7 +56,7 @@ async function changeSubject(newsId) {
             newSubject: selectedSubject
         };
 
-        await fetch(`https://beb-web.onrender.com/news`, {
+        await fetch(`https://beb-web.onrender.com/postNews`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -128,7 +128,7 @@ async function changeText(newsId) {
             newText: selectedText
         };
 
-        await fetch(`https://beb-web.onrender.com/news`, {
+        await fetch(`https://beb-web.onrender.com/postNews`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -202,7 +202,7 @@ async function deleteNews(newsId) {
                 action: "delete_news",
             };
 
-            await fetch(`https://beb-web.onrender.com/news`, {
+            await fetch(`https://beb-web.onrender.com/postNews`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -242,7 +242,7 @@ async function loadNewsData() {
 
     try {
         loader.style.display = 'block';
-        const response = await fetch('https://beb-web.onrender.com/news');
+        const response = await fetch('https://beb-web.onrender.com/getNews');
         if (!response.ok) {
             throw new Error('Ошибка при загрузке данных');
         }
