@@ -49,7 +49,7 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
     const registerForm = document.getElementById('registerForm');
     registerForm.classList.add('disabled');
 
-    fetch('https://beb-web.onrender.com/register', {
+    fetch('https://beb-web.onrender.com/registration', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

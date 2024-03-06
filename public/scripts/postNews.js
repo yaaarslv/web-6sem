@@ -36,7 +36,7 @@ document.getElementById('newsForm').addEventListener('submit', function (e) {
     const newsForm = document.getElementById('newsForm');
     newsForm.classList.add('disabled');
 
-    fetch('https://beb-web.onrender.com/news', {
+    fetch('https://beb-web.onrender.com/postNews', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

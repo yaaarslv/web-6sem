@@ -133,7 +133,7 @@ export class AppController {
         return;
     }
 
-    @Post("/register")
+    @Post("/registration")
     async register(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.userService.register(req);
         res.json(result);
@@ -161,28 +161,28 @@ export class AppController {
         return;
     }
 
-    @Get("/reviews")
+    @Get("/getReviews")
     async getManageReviews(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.reviewService.getManageReviews();
         res.json(result);
         return;
     }
 
-    @Post("/reviews")
+    @Post("/postReviews")
     async postManageReviews(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.reviewService.postManageReviews(req);
         res.json(result);
         return;
     }
 
-    @Get("/news")
+    @Get("/getNews")
     async getManageNews(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.newsService.getManageNews();
         res.json(result);
         return;
     }
 
-    @Post("/news")
+    @Post("/postNews")
     async postManageNews(@Req() req: Request, @Res() res: Response): Promise<any> {
         var result = await this.newsService.postManageNews(req);
         res.json(result);
