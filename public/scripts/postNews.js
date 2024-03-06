@@ -36,7 +36,7 @@ document.getElementById('newsForm').addEventListener('submit', function (e) {
     const newsForm = document.getElementById('newsForm');
     newsForm.classList.add('disabled');
 
-    fetch('https://petshop-backend-yaaarslv.vercel.app/news', {
+    fetch('https://beb-web.onrender.com/news', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

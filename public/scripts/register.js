@@ -9,7 +9,7 @@ document.getElementById('sendCodeButton').addEventListener('click', function () 
         const code_button = document.getElementById("sendCodeButton")
         code_button.disabled = true;
 
-        fetch('https://petshop-backend-yaaarslv.vercel.app/send_code', {
+        fetch('https://beb-web.onrender.com/send_code', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -49,7 +49,7 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
     const registerForm = document.getElementById('registerForm');
     registerForm.classList.add('disabled');
 
-    fetch('https://petshop-backend-yaaarslv.vercel.app/register', {
+    fetch('https://beb-web.onrender.com/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -61,9 +61,9 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
             if (data.success) {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('role', data.role)
-                localStorage.setItem('isBanned', data.isBanned)
+                localStorage.setItem('isBanned', data.is_banned)
                 localStorage.setItem('email', email)
-                localStorage.setItem('emailConfirmed', data.emailConfirmed)
+                localStorage.setItem('emailConfirmed', data.emailconfirmed)
                 localStorage.setItem('cart_id', data.cart_id)
                 window.location.href = 'index';
             } else {

@@ -16,8 +16,8 @@ async function getRoleFromServer() {
             .then(data => {
                 if (data.success) {
                     const role = data.role;
-                    const isBanned = data.isBanned;
-                    const emailConfirmed = data.emailConfirmed;
+                    const isBanned = data.is_banned;
+                    const emailConfirmed = data.emailconfirmed;
                     const cart_id = data.cart_id;
                     localStorage.setItem('role', role);
                     localStorage.setItem('isBanned', isBanned);

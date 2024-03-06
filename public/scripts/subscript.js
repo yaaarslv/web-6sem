@@ -13,7 +13,7 @@ document.getElementById('subscriptionForm').addEventListener('submit', function 
         const subscriptionForm = document.getElementById('subscriptionForm');
         subscriptionForm.classList.add('disabled');
 
-        fetch('https://petshop-backend-yaaarslv.vercel.app/subscript', {
+        fetch('https://beb-web.onrender.com/subscript', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

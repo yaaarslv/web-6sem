@@ -47,7 +47,7 @@ async function changeRole(userId) {
             newRole: selectedRole
         };
 
-        await fetch(`https://petshop-backend-yaaarslv.vercel.app/users`, {
+        await fetch(`https://beb-web.onrender.com/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ async function changeIsBanned(userId) {
             isBanned: selectedIsBanned
         };
 
-        await fetch(`https://petshop-backend-yaaarslv.vercel.app/users`, {
+        await fetch(`https://beb-web.onrender.com/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -183,7 +183,7 @@ async function changeEmailConfirmed(userId) {
             emailConfirmed: selectedEmail
         };
 
-        await fetch(`https://petshop-backend-yaaarslv.vercel.app/users`, {
+        await fetch(`https://beb-web.onrender.com/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -257,7 +257,7 @@ async function deleteUser(userId) {
                 action: "delete_user",
             };
 
-            await fetch(`https://petshop-backend-yaaarslv.vercel.app/users`, {
+            await fetch(`https://beb-web.onrender.com/users`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -295,7 +295,7 @@ document.getElementById('addUserForm').addEventListener('submit', function (e) {
     const addUserForm = document.getElementById('addUserForm');
     addUserForm.classList.add('disabled');
 
-    fetch('https://petshop-backend-yaaarslv.vercel.app/addUser', {
+    fetch('https://beb-web.onrender.com/addUser', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -370,7 +370,7 @@ async function loadUserData() {
 
     try {
         loader.style.display = 'block';
-        const response = await fetch('https://petshop-backend-yaaarslv.vercel.app/users');
+        const response = await fetch('https://beb-web.onrender.com/users');
         if (!response.ok) {
             throw new Error('Ошибка при загрузке данных');
         }
@@ -388,8 +388,8 @@ async function loadUserData() {
                     <td class="id-cell">${user.id}</td>
                     <td class="email-cell">${user.email}</td>
                     <td class="role-cell">${user.role}</td>
-                    <td class="isBanned-cell">${user.isBanned}</td>
-                    <td class="emailConfirmed-cell">${user.emailConfirmed}</td>
+                    <td class="isBanned-cell">${user.is_banned}</td>
+                    <td class="emailConfirmed-cell">${user.emailconfirmed}</td>
                     <td class="actions">
                         <button class="edit-button" onclick="changeRole('${user.id}')">Изменить роль</button>
                         <button class="ban-button" onclick="changeIsBanned('${user.id}')">Управлять баном</button>

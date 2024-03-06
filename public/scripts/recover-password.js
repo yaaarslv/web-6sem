@@ -9,7 +9,7 @@ document.getElementById('sendRecoverCodeButton').addEventListener('click', funct
         const code_button = document.getElementById("sendRecoverCodeButton")
         code_button.disabled = true;
 
-        fetch('https://petshop-backend-yaaarslv.vercel.app/send_recover_code', {
+        fetch('https://beb-web.onrender.com/send_recover_code', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ document.getElementById('recoverForm').addEventListener('submit', function (e) {
     const recoverForm = document.getElementById('recoverForm');
     recoverForm.classList.add('disabled');
 
-    fetch('https://petshop-backend-yaaarslv.vercel.app/check_recover_code', {
+    fetch('https://beb-web.onrender.com/check_recover_code', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -79,7 +79,7 @@ document.getElementById('recoverForm').addEventListener('submit', function (e) {
                         const changePasswordForm = document.getElementById('changePasswordForm');
                         changePasswordForm.classList.add('disabled');
 
-                        fetch('https://petshop-backend-yaaarslv.vercel.app/change_password', {
+                        fetch('https://beb-web.onrender.com/change_password', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'

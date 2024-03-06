@@ -3,10 +3,24 @@ import * as path from 'path';
 import * as fs from 'fs';
 import {Response} from 'express';
 import {AppService} from './app.service';
+import {CartItemService} from "./services/cartItemService";
+import {CartService} from "./services/cartService";
+import {NewsService} from "./services/newsService";
+import {ProductService} from "./services/productService";
+import {ReviewService} from "./services/reviewService";
+import {UserService} from "./services/userService";
+import {SubscribeService} from "./services/subscribeService";
 
 @Controller()
 export class AppController {
-    constructor(private appService: AppService) {
+    constructor(private appService: AppService,
+                private cartItemService: CartItemService,
+                private cartService: CartService,
+                private newsService: NewsService,
+                private productService: ProductService,
+                private reviewService: ReviewService,
+                private userService: UserService,
+                private subscribeService: SubscribeService) {
     }
 
     @Get('/loadingTime')
@@ -50,21 +64,21 @@ export class AppController {
     @Post('/login')
     async login(@Req() req: Request, @Res() res: Response): Promise<any> {
         const data = req.body;
-        var result = await this.appService.login(data);
+        var result = await this.userService.login(data);
         res.json(result);
         return;
     }
 
     @Get("/products")
     async getManageProducts(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.appService.getManageProducts();
+        var result = await this.productService.getManageProducts();
         res.json(result);
         return;
     }
 
     @Post("/products")
     async postManageProducts(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.appService.postManageProducts(req);
+        var result = await this.productService.postManageProducts(req);
         res.json(result);
         return;
     }
@@ -72,21 +86,21 @@ export class AppController {
     @Get('/product/:productId')
     async getProduct(@Res() res: Response): Promise<any> {
         const productId = parseInt(res.req.params.productId);
-        var result = await this.appService.getProduct(productId);
+        var result = await this.productService.getProduct(productId);
         res.json(result);
         return;
     }
 
     @Post("/checkRoleIsBanned")
     async checkRole(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.appService.checkRole(req);
+        var result = await this.userService.checkRole(req);
         res.json(result);
         return;
     }
 
     @Post("/addRate")
     async addRate(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.appService.addRate(req);
+        var result = await this.productService.addRate(req);
         res.json(result);
         return;
     }
@@ -114,49 +128,120 @@ export class AppController {
 
     @Post("/change_password")
     async change_password(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.appService.changePassword(req);
+        var result = await this.userService.changePassword(req);
         res.json(result);
         return;
     }
 
     @Post("/register")
     async register(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.appService.register(req);
+        var result = await this.userService.register(req);
         res.json(result);
         return;
     }
 
     @Post("/addUser")
     async addUser(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.appService.addUser(req);
+        var result = await this.userService.addUser(req);
         res.json(result);
         return;
     }
 
     @Get("/users")
     async getManageUsers(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.appService.getManageUsers();
+        var result = await this.userService.getManageUsers();
         res.json(result);
         return;
     }
 
     @Post("/users")
     async postManageUsers(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.appService.postManageUsers(req);
+        var result = await this.userService.postManageUsers(req);
         res.json(result);
         return;
     }
 
     @Get("/reviews")
     async getManageReviews(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.appService.getManageReviews();
+        var result = await this.reviewService.getManageReviews();
         res.json(result);
         return;
     }
 
     @Post("/reviews")
     async postManageReviews(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.appService.postManageReviews(req);
+        var result = await this.reviewService.postManageReviews(req);
+        res.json(result);
+        return;
+    }
+
+    @Get("/news")
+    async getManageNews(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.newsService.getManageNews();
+        res.json(result);
+        return;
+    }
+
+    @Post("/news")
+    async postManageNews(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.newsService.postManageNews(req);
+        res.json(result);
+        return;
+    }
+
+    @Post("/subscript")
+    async subscript(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.subscribeService.subscript(req);
+        res.json(result);
+        return;
+    }
+
+    @Post("/unsubscript")
+    async unsubscript(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.subscribeService.unsubscript(req);
+        res.json(result);
+        return;
+    }
+
+    @Get('/search/:search_term')
+    async search(@Res() res: Response): Promise<any> {
+        const search_term = res.req.params.search_term;
+        var result = await this.productService.search(search_term);
+        res.json(result);
+        return;
+    }
+
+    @Post("/confirmEmail")
+    async confirmEmail(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.userService.confirmEmail(req);
+        res.json(result);
+        return;
+    }
+
+    @Post("/cart")
+    async cart(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.cartItemService.cart(req);
+        res.json(result);
+        return;
+    }
+
+    @Post("/changeQuantity")
+    async changeQuantity(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.cartItemService.changeQuantity(req);
+        res.json(result);
+        return;
+    }
+
+    @Post("/deleteCartProduct")
+    async deleteCartProduct(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.cartItemService.deleteCartProduct(req);
+        res.json(result);
+        return;
+    }
+
+    @Post("/addProductToCart")
+    async addProductToCart(@Req() req: Request, @Res() res: Response): Promise<any> {
+        var result = await this.cartItemService.addProductToCart(req);
         res.json(result);
         return;
     }

@@ -55,7 +55,7 @@ async function changeName(productId) {
         formData.append("productId", productId);
         formData.append("action", "change_name");
 
-        await fetch(`https://petshop-backend-yaaarslv.vercel.app/products`, {
+        await fetch(`https://beb-web.onrender.com/products`, {
             method: 'POST',
             body: formData
         }).then(response => response.json())
@@ -123,7 +123,7 @@ async function changePrice(productId) {
         formData.append("productId", productId);
         formData.append("action", "change_price");
 
-        await fetch(`https://petshop-backend-yaaarslv.vercel.app/products`, {
+        await fetch(`https://beb-web.onrender.com/products`, {
             method: 'POST',
             body: formData
         }).then(response => response.json())
@@ -195,7 +195,7 @@ async function changeCategory(productId) {
         formData.append("productId", productId);
         formData.append("action", "change_category");
 
-        await fetch(`https://petshop-backend-yaaarslv.vercel.app/products`, {
+        await fetch(`https://beb-web.onrender.com/products`, {
             method: 'POST',
             body: formData
         }).then(response => response.json())
@@ -263,7 +263,7 @@ async function changeBrand(productId) {
         formData.append("productId", productId);
         formData.append("action", "change_brand");
 
-        await fetch(`https://petshop-backend-yaaarslv.vercel.app/products`, {
+        await fetch(`https://beb-web.onrender.com/products`, {
             method: 'POST',
             body: formData
         }).then(response => response.json())
@@ -336,7 +336,7 @@ async function changeCount(productId) {
         formData.append("productId", productId);
         formData.append("action", "change_count");
 
-        await fetch(`https://petshop-backend-yaaarslv.vercel.app/products`, {
+        await fetch(`https://beb-web.onrender.com/products`, {
             method: 'POST',
             body: formData
         }).then(response => response.json())
@@ -477,7 +477,7 @@ async function deleteProduct(productId) {
             formData.append("productId", productId);
             formData.append("action", "delete_product");
 
-            await fetch(`https://petshop-backend-yaaarslv.vercel.app/products`, {
+            await fetch(`https://beb-web.onrender.com/products`, {
                 method: 'POST',
                 body: formData
             }).then(response => response.json())
@@ -534,7 +534,7 @@ async function loadProductsData() {
 
     try {
         loader.style.display = 'block';
-        const response = await fetch('https://petshop-backend-yaaarslv.vercel.app/products');
+        const response = await fetch('https://beb-web.onrender.com/products');
         if (!response.ok) {
             throw new Error('Ошибка при загрузке данных');
         }
@@ -554,11 +554,11 @@ async function loadProductsData() {
                     <td class="price-cell">${product.price}</td>
                     <td class="category-cell">${product.category}</td>
                     <td class="brand-cell">${product.brand}</td>
-                    <td class="image-cell"><img class="tableImage" src="${product.imageURL}" alt="Product Image"></td>
+                    <td class="image-cell"><img class="tableImage" src="${product.imageurl}" alt="Product Image"></td>
 
                     <td class="count-cell">${product.count}</td>
                     <td class="addedBy-cell">
-                    <div id="addedByContent" style="display: none;">${product.addedBy}</div>
+                    <div id="addedByContent" style="display: none;">${product.addedby}</div>
                     <button id="showButton" onclick="toggleVisibility('${product.id}')" style="font-size: 10px">Показать</button>
                     <button id="hideButton" onclick="toggleVisibility('${product.id}')" style="display: none; font-size: 10px">Скрыть</button>
                     </td>

@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         errorMessageBox.style.display = 'none';
 
-        fetch('https://petshop-backend-yaaarslv.vercel.app/search/' + search_term)
+        fetch('https://beb-web.onrender.com/search/' + search_term)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                             const imageDiv = document.createElement('div');
-                            imageDiv.innerHTML = `<img class="product-image" src="${product.imageURL}" alt="Product Image">`;
+                            imageDiv.innerHTML = `<img class="product-image" src="${product.imageurl}" alt="Product Image">`;
                             imageDiv.addEventListener('mouseover', () => {
                                 imageDiv.style.cursor = "pointer";
                             });
@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         newQuantity: quantity.textContent
                                     };
 
-                                    return fetch('https://petshop-backend-yaaarslv.vercel.app/changeQuantity', {
+                                    return fetch('https://beb-web.onrender.com/changeQuantity', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json'
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         newQuantity: quantity.textContent
                                     };
 
-                                    return fetch('https://petshop-backend-yaaarslv.vercel.app/changeQuantity', {
+                                    return fetch('https://beb-web.onrender.com/changeQuantity', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json'
@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     cartProductId: cartItemIdDiv.textContent,
                                 };
 
-                                return fetch('https://petshop-backend-yaaarslv.vercel.app/deleteCartProduct', {
+                                return fetch('https://beb-web.onrender.com/deleteCartProduct', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json'
@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     cart_id: cart_id
                                 };
 
-                                return fetch('https://petshop-backend-yaaarslv.vercel.app/addProductToCart', {
+                                return fetch('https://beb-web.onrender.com/addProductToCart', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json'

@@ -261,7 +261,7 @@ async function fetchAndDisplayProducts() {
                                         newQuantity: quantity.textContent
                                     };
 
-                                    return fetch('https://petshop-backend-yaaarslv.vercel.app/changeQuantity', {
+                                    return fetch('https://beb-web.onrender.com/changeQuantity', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json'
@@ -297,7 +297,7 @@ async function fetchAndDisplayProducts() {
                                         newQuantity: quantity.textContent
                                     };
 
-                                    return fetch('https://petshop-backend-yaaarslv.vercel.app/changeQuantity', {
+                                    return fetch('https://beb-web.onrender.com/changeQuantity', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json'
@@ -324,7 +324,7 @@ async function fetchAndDisplayProducts() {
                                     cartProductId: cartItemIdDiv.textContent,
                                 };
 
-                                return fetch('https://petshop-backend-yaaarslv.vercel.app/deleteCartProduct', {
+                                return fetch('https://beb-web.onrender.com/deleteCartProduct', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json'
@@ -348,7 +348,7 @@ async function fetchAndDisplayProducts() {
                                     cart_id: cart_id
                                 };
 
-                                return fetch('https://petshop-backend-yaaarslv.vercel.app/addProductToCart', {
+                                return fetch('https://beb-web.onrender.com/addProductToCart', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json'

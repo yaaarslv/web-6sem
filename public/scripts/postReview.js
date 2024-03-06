@@ -35,7 +35,7 @@ document.getElementById('reviewForm').addEventListener('submit', function (e) {
     const reviewForm = document.getElementById('reviewForm');
     reviewForm.classList.add('disabled');
 
-    fetch('https://petshop-backend-yaaarslv.vercel.app/reviews', {
+    fetch('https://beb-web.onrender.com/reviews', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

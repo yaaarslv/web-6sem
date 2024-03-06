@@ -23,7 +23,7 @@ async function fetchAndDisplayCart() {
             cart_id: cart_id
         };
 
-        return fetch('https://petshop-backend-yaaarslv.vercel.app/cart', {
+        return fetch('https://beb-web.onrender.com/cart', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -54,7 +54,7 @@ async function fetchAndDisplayCart() {
                                     newQuantity: quantity.textContent
                                 };
 
-                                return fetch('https://petshop-backend-yaaarslv.vercel.app/changeQuantity', {
+                                return fetch('https://beb-web.onrender.com/changeQuantity', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json'
@@ -90,7 +90,7 @@ async function fetchAndDisplayCart() {
                                     newQuantity: quantity.textContent
                                 };
 
-                                return fetch('https://petshop-backend-yaaarslv.vercel.app/changeQuantity', {
+                                return fetch('https://beb-web.onrender.com/changeQuantity', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json'
@@ -118,7 +118,7 @@ async function fetchAndDisplayCart() {
                                 cartProductId: cartProductId,
                             };
 
-                            return fetch('https://petshop-backend-yaaarslv.vercel.app/deleteCartProduct', {
+                            return fetch('https://beb-web.onrender.com/deleteCartProduct', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -163,7 +163,7 @@ function createProductElement(product) {
     productSelect.style.height = '40px';
 
     const imageDiv = document.createElement('div');
-    imageDiv.innerHTML = `<img class="cart-product-image" src="${product.imageURL}" alt="Product Image">`;
+    imageDiv.innerHTML = `<img class="cart-product-image" src="${product.imageurl}" alt="Product Image">`;
     imageDiv.addEventListener('mouseover', () => {
         imageDiv.style.cursor = "pointer";
     });
@@ -221,7 +221,7 @@ function createProductElement(product) {
 
     elements.forEach((element) => {
         element.addEventListener('click', () => {
-            const productId = product.productId;
+            const productId = product.productid;
             window.open(`product?id=${productId}`);
         });
     });

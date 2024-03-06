@@ -8,7 +8,7 @@ async function fetchAndDisplayReviews() {
 
         await new Promise(resolve => setTimeout(resolve, 2000));
 
-        const response = await fetch('https://petshop-backend-yaaarslv.vercel.app/reviews');
+        const response = await fetch('https://beb-web.onrender.com/reviews');
         if (!response.ok) {
             throw new Error(`Ошибка при загрузке данных: ${response.status} - ${response.statusText}`);
         }
