@@ -30,7 +30,7 @@ export class AppController {
 
     @Get()
     root(@Res() res: Response) {
-        return res.render("index");
+        return res.redirect("index");
     }
 
     @Get('/images/*')
