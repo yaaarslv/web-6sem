@@ -2,7 +2,7 @@ import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
 import {Carts} from "../models/Carts";
-import {Client} from "pg";
+const {Client} = require('pg');
 
 @Injectable()
 export class CartService {

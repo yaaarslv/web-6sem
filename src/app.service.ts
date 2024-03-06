@@ -1,13 +1,10 @@
 import {Injectable} from '@nestjs/common';
 import {Email} from './models/Email';
 import {randomInt} from 'crypto';
-import * as path from "path";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Users} from "./models/User";
 import {Repository} from "typeorm";
 const {Client} = require('pg');
-
-let bcrypt = require('bcrypt');
 
 
 @Injectable()

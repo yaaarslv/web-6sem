@@ -2,9 +2,9 @@ import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Users} from "../models/User";
 import {Repository} from "typeorm";
-import bcrypt from "bcrypt";
 import {Carts} from "../models/Carts";
 import {AppService} from "../app.service";
+let bcrypt = require('bcrypt');
 
 @Injectable()
 export class UserService {
