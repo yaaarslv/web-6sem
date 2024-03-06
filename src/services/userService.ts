@@ -198,10 +198,11 @@ export class UserService {
     }
 
     async getManageUsers(): Promise<any> {
-        return this.userRepository
+        const users = await this.userRepository
             .createQueryBuilder('user')
             .orderBy('LENGTH(user.role)', 'DESC')
             .getMany();
+        return {users}
     }
 
     async postManageUsers(req: Request): Promise<any> {
