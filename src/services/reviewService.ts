@@ -12,7 +12,7 @@ export class ReviewService {
         try {
             const reviews = await this.reviewRepository
                 .createQueryBuilder('review')
-                .orderBy('LENGTH(review.id)')
+                .orderBy('review.id')
                 .getMany();
             return {success: true, reviews};
         } catch (error) {

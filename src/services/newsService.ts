@@ -16,7 +16,7 @@ export class NewsService {
         try {
             const news = await this.newsRepository
                 .createQueryBuilder('news')
-                .orderBy('LENGTH(news.id)')
+                .orderBy('news.id')
                 .getMany();
             return {success: true, news};
         } catch (error) {
