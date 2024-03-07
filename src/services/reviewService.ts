@@ -21,8 +21,8 @@ export class ReviewService {
         }
     }
 
-    async postManageReviews(req: Request): Promise<any> {
-        const data = req.body;
+    async postManageReviews(data): Promise<any> {
+        
 
         const requiredKeys = ["author", "text"];
 

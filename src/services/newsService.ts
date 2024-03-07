@@ -25,8 +25,8 @@ export class NewsService {
         }
     }
 
-    async postManageNews(req: Request): Promise<any> {
-        const data = req.body;
+    async postManageNews(data): Promise<any> {
+        
 
         if ('subject' in data && 'text' in data) {
             const subject = data["subject"].toString();

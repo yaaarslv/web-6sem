@@ -1,16 +1,9 @@
-import {Controller, Get, HttpStatus, Post, Req, Res} from '@nestjs/common';
-import * as path from 'path';
-import * as fs from 'fs';
+import {Body, Controller, Get, Post, Res} from '@nestjs/common';
 import {Response} from 'express';
 import {AppService} from '../app.service';
-import {CartItemService} from "../services/cartItemService";
-import {CartService} from "../services/cartService";
-import {NewsService} from "../services/newsService";
-import {ProductService} from "../services/productService";
-import {ReviewService} from "../services/reviewService";
-import {UserService} from "../services/userService";
-import {SubscribeService} from "../services/subscribeService";
 import {ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {SendCodeDTO} from "../dto/sendCodeDTO";
+import {CheckRecoverCodeDTO} from "../dto/checkRecoverCodeDTO";
 
 @ApiTags('app')
 @Controller("/app")
@@ -44,8 +37,8 @@ export class AppController {
     )
     @ApiResponse({status: 200, description: 'Code has been successfully sent'})
     @ApiResponse({status: 400, description: 'Invalid recipient or other error'})
-    async send_code(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.appService.sendCode(req);
+    async send_code(@Body() sendCodeDto: SendCodeDTO, @Res() res: Response): Promise<any> {
+        var result = await this.appService.sendCode(sendCodeDto);
         res.status(result.success ? 200 : 400).json(result);
         return;
     }
@@ -62,8 +55,8 @@ export class AppController {
     )
     @ApiResponse({status: 200, description: 'Recover code has been successfully sent'})
     @ApiResponse({status: 400, description: 'Invalid recipient or other error'})
-    async send_recover_code(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.appService.sendRecoverCode(req);
+    async send_recover_code(@Body() sendCodeDto: SendCodeDTO, @Res() res: Response): Promise<any> {
+        var result = await this.appService.sendRecoverCode(sendCodeDto);
         res.status(result.success ? 200 : 400).json(result);
         return;
     }
@@ -80,8 +73,8 @@ export class AppController {
     })
     @ApiResponse({status: 200, description: 'Recovery code is valid'})
     @ApiResponse({status: 400, description: 'Invalid email, recovery code or other error'})
-    async check_recover_code(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.appService.checkRecoverCode(req);
+    async check_recover_code(@Body() checkRecoverCodeDTO: CheckRecoverCodeDTO, @Res() res: Response): Promise<any> {
+        var result = await this.appService.checkRecoverCode(checkRecoverCodeDTO);
         res.status(result.success ? 200 : 400).json(result);
         return;
     }

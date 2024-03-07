@@ -13,7 +13,6 @@ import {Carts} from "./models/Carts";
 import {Reviews} from "./models/Review";
 import {News} from "./models/News";
 import {Subscribers} from "./models/Subscribers";
-import {CartService} from "./services/cartService";
 import {CartItemService} from "./services/cartItemService";
 import {NewsService} from "./services/newsService";
 import {ProductService} from "./services/productService";
@@ -44,7 +43,7 @@ import {UserController} from "./controllers/userController";
     ],
     controllers: [AppController, CartController, NewsController, ProductController, ReviewController, SubscribeController, UserController],
     providers: [
-        AppService, CartService, CartItemService, NewsService, ProductService, ReviewService, SubscribeService, UserService,
+        AppService, CartItemService, NewsService, ProductService, ReviewService, SubscribeService, UserService,
         {
             provide: APP_INTERCEPTOR,
             useClass: TimingInterceptor,

@@ -41,8 +41,8 @@ export class SubscribeService {
         }
     }
 
-    async subscript(req: Request): Promise<any> {
-        const data = req.body;
+    async subscript(data): Promise<any> {
+        
         if ('email' in data) {
             const email = data['email'].toString();
 
@@ -59,8 +59,8 @@ export class SubscribeService {
         }
     }
 
-    async unsubscript(req: Request): Promise<any> {
-        const data = req.body;
+    async unsubscript(data): Promise<any> {
+        
         if ('email' in data) {
             const email = data['email'].toString();
 

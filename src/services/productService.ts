@@ -20,9 +20,7 @@ export class ProductService {
         }
     }
 
-    async postManageProducts(req: Request): Promise<any> {
-        var data = req.body;
-
+    async postManageProducts(data): Promise<any> {
         if ('productId' in data && 'action' in data) {
             const productId = data['productId'];
             const action = data['action'];
@@ -114,8 +112,8 @@ export class ProductService {
         }
     }
 
-    async addRate(req: Request): Promise<any> {
-        const data = req.body;
+    async addRate(data): Promise<any> {
+        
 
         const requiredKeys = ["id", "myRating"];
 

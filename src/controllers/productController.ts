@@ -1,7 +1,9 @@
 import {ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {Controller, Get, Post, Req, Res} from "@nestjs/common";
+import {Body, Controller, Get, Post, Res} from "@nestjs/common";
 import {Response} from "express";
 import {ProductService} from "../services/productService";
+import {PostManageProductsDTO} from "../dto/postManageProductsDTO";
+import {AddRateDTO} from "../dto/addRateDTO";
 
 @ApiTags('product')
 @Controller("/product")
@@ -11,7 +13,7 @@ export class ProductController {
     @Get("/products")
     @ApiOperation({summary: 'Get all products'})
     @ApiResponse({status: 200, description: 'Returns all products'})
-    async getManageProducts(@Req() req: Request, @Res() res: Response): Promise<any> {
+    async getManageProducts(@Res() res: Response): Promise<any> {
         var result = await this.productService.getManageProducts();
         res.status(result.success ? 200 : 400).json(result);
         return;
@@ -29,8 +31,8 @@ export class ProductController {
     })
     @ApiResponse({status: 200, description: 'Operation done successfully'})
     @ApiResponse({status: 400, description: 'Error during operation'})
-    async postManageProducts(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.productService.postManageProducts(req);
+    async postManageProducts(@Body() postManageProducts: PostManageProductsDTO, @Res() res: Response): Promise<any> {
+        var result = await this.productService.postManageProducts(postManageProducts);
         res.status(result.success ? 200 : 400).json(result);
         return;
     }
@@ -59,8 +61,8 @@ export class ProductController {
     })
     @ApiResponse({status: 200, description: 'Rating updated'})
     @ApiResponse({status: 400, description: 'Error during operation'})
-    async addRate(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.productService.addRate(req);
+    async addRate(@Body() addRate: AddRateDTO, @Res() res: Response): Promise<any> {
+        var result = await this.productService.addRate(addRate);
         res.status(result.success ? 200 : 400).json(result);
         return;
     }

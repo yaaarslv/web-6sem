@@ -168,8 +168,7 @@ export class AppService {
         }
     }
 
-    async sendCode(req: Request): Promise<any> {
-        const data = req.body;
+    async sendCode(data): Promise<any> {
 
         if ('recipient' in data) {
             const recipient = data['recipient'];
@@ -186,8 +185,7 @@ export class AppService {
         return {'success': false, 'error': 'Переданы не все параметры!'};
     }
 
-    async sendRecoverCode(req: Request): Promise<any> {
-        const data = req.body;
+    async sendRecoverCode(data): Promise<any> {
 
         if ('recipient' in data) {
             const recipient = data['recipient'];
@@ -204,8 +202,7 @@ export class AppService {
         return {'success': false, 'error': 'Переданы не все параметры!'};
     }
 
-    async checkRecoverCode(req: Request): Promise<any> {
-        const data = req.body;
+    async checkRecoverCode(data): Promise<any> {
 
         const requiredKeys = ["email", "code"];
 

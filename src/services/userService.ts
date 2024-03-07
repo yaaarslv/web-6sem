@@ -40,9 +40,9 @@ export class UserService {
         return {success: false, error: 'Переданы не все параметры!'};
     }
 
-    async checkRole(req: Request): Promise<any> {
+    async checkRole(data): Promise<any> {
         try {
-            const token = req.body["token"];
+            const token = data["token"];
 
             if (!token) {
                 return {success: false, error: 'Неправильный запрос'};
@@ -76,8 +76,8 @@ export class UserService {
         }
     }
 
-    async changePassword(req: Request): Promise<any> {
-        const data = req.body;
+    async changePassword(data): Promise<any> {
+        
 
         const requiredKeys = ["email", "password"];
 
@@ -103,8 +103,8 @@ export class UserService {
         }
     }
 
-    async register(req: Request): Promise<any> {
-        const data = req.body;
+    async register(data): Promise<any> {
+        
 
         const requiredKeys = ["email", "password", "code"];
 
@@ -153,8 +153,8 @@ export class UserService {
         return {success: false, error: 'Недостаточные данные для регистрации'};
     }
 
-    async addUser(req: Request): Promise<any> {
-        const data = req.body;
+    async addUser(data): Promise<any> {
+        
 
         const requiredKeys = ["email", "password"];
 
@@ -205,8 +205,8 @@ export class UserService {
         return {users}
     }
 
-    async postManageUsers(req: Request): Promise<any> {
-        const data = req.body;
+    async postManageUsers(data): Promise<any> {
+        
 
         if ('userId' in data && 'action' in data) {
             const userId = data['userId'];
@@ -284,8 +284,8 @@ export class UserService {
         }
     }
 
-    async confirmEmail(req: Request): Promise<any> {
-        const data = req.body;
+    async confirmEmail(data): Promise<any> {
+        
         const requiredKeys = ["email", "code"];
 
         if (requiredKeys.every(key => key in data)) {

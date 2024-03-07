@@ -1,7 +1,12 @@
 import {ApiBody, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {Controller, Get, Post, Req, Res} from "@nestjs/common";
+import {Body, Controller, Get, Post, Res} from "@nestjs/common";
 import {Response} from "express";
 import {UserService} from "../services/userService";
+import {LoginDTO} from "../dto/loginDTO";
+import {CheckRoleDTO} from "../dto/checkRoleDTO";
+import {RegisterDTO} from "../dto/registerDTO";
+import {PostManageUsersDTO} from "../dto/postManageUsersDTO";
+import {ConfirmEmailDTO} from "../dto/confirmEmailDTO";
 
 @ApiTags('user')
 @Controller("/user")
@@ -9,7 +14,7 @@ export class UserController {
     constructor(private userService: UserService){};
 
     @Post('/login')
-    @ApiOperation({summary: 'Login user'})
+    @ApiOperation({summary: 'LoginDTO user'})
     @ApiBody({
         schema: {
             properties: {
@@ -20,9 +25,8 @@ export class UserController {
     })
     @ApiResponse({status: 200, description: 'User logged in successfully'})
     @ApiResponse({status: 400, description: 'Invalid credentials'})
-    async login(@Req() req: Request, @Res() res: Response): Promise<any> {
-        const data = req.body;
-        var result = await this.userService.login(data);
+    async login(@Body() login: LoginDTO, @Res() res: Response): Promise<any> {
+        var result = await this.userService.login(login);
         res.status(result.success ? 200 : 400).json(result);
         return;
     }
@@ -39,8 +43,8 @@ export class UserController {
     )
     @ApiResponse({status: 200, description: 'Role and user is banned check result'})
     @ApiResponse({status: 400, description: 'Invalid token'})
-    async checkRole(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.userService.checkRole(req);
+    async checkRole(@Body() checkRole: CheckRoleDTO, @Res() res: Response): Promise<any> {
+        var result = await this.userService.checkRole(checkRole);
         res.status(result.success ? 200 : 400).json(result);
         return;
     }
@@ -57,8 +61,8 @@ export class UserController {
     })
     @ApiResponse({ status: 200, description: 'Password changed successfully' })
     @ApiResponse({ status: 400, description: 'Invalid email, password or other error' })
-    async change_password(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.userService.changePassword(req);
+    async change_password(@Body() login: LoginDTO, @Res() res: Response): Promise<any> {
+        var result = await this.userService.changePassword(login);
         res.status(result.success ? 200 : 400).json(result);
         return;
     }
@@ -76,8 +80,8 @@ export class UserController {
     })
     @ApiResponse({ status: 200, description: 'User registered successfully' })
     @ApiResponse({ status: 400, description: 'Invalid email, password, code or other error' })
-    async register(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.userService.register(req);
+    async register(@Body() register: RegisterDTO, @Res() res: Response): Promise<any> {
+        var result = await this.userService.register(register);
         res.status(result.success ? 200 : 400).json(result);
         return;
     }
@@ -94,8 +98,8 @@ export class UserController {
     })
     @ApiResponse({ status: 200, description: 'User added successfully' })
     @ApiResponse({ status: 400, description: 'Invalid email, password or other error' })
-    async addUser(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.userService.addUser(req);
+    async addUser(@Body() login: LoginDTO, @Res() res: Response): Promise<any> {
+        var result = await this.userService.addUser(login);
         res.status(result.success ? 200 : 400).json(result);
         return;
     }
@@ -103,7 +107,7 @@ export class UserController {
     @Get("/users")
     @ApiOperation({summary: 'Get all users'})
     @ApiResponse({status: 200, description: 'Returns all users'})
-    async getManageUsers(@Req() req: Request, @Res() res: Response): Promise<any> {
+    async getManageUsers(@Res() res: Response): Promise<any> {
         var result = await this.userService.getManageUsers();
         res.status(200).json(result);
         return;
@@ -121,8 +125,8 @@ export class UserController {
     })
     @ApiResponse({status: 200, description: 'Operation done successfully'})
     @ApiResponse({status: 400, description: 'Error during operation'})
-    async postManageUsers(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.userService.postManageUsers(req);
+    async postManageUsers(@Body() postManageUsers: PostManageUsersDTO, @Res() res: Response): Promise<any> {
+        var result = await this.userService.postManageUsers(postManageUsers);
         res.status(result.success ? 200 : 400).json(result);
         return;
     }
@@ -139,8 +143,8 @@ export class UserController {
     })
     @ApiResponse({ status: 200, description: 'Email confirmed successfully' })
     @ApiResponse({ status: 400, description: 'Invalid email, code or other error' })
-    async confirmEmail(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.userService.confirmEmail(req);
+    async confirmEmail(@Body() confirmEmail: ConfirmEmailDTO, @Res() res: Response): Promise<any> {
+        var result = await this.userService.confirmEmail(confirmEmail);
         res.status(result.success ? 200 : 400).json(result);
         return;
     }

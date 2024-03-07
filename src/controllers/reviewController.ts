@@ -1,7 +1,8 @@
 import {ApiBody, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {Controller, Get, Post, Req, Res} from "@nestjs/common";
+import {Body, Controller, Get, Post, Res} from "@nestjs/common";
 import {Response} from "express";
 import {ReviewService} from "../services/reviewService";
+import {PostManageReviewsDTO} from "../dto/postManageReviewsDTO";
 
 @ApiTags('review')
 @Controller("/review")
@@ -11,7 +12,7 @@ export class ReviewController {
     @Get("/getReviews")
     @ApiOperation({summary: 'Get all reviews'})
     @ApiResponse({status: 200, description: 'Returns all reviews'})
-    async getManageReviews(@Req() req: Request, @Res() res: Response): Promise<any> {
+    async getManageReviews(@Res() res: Response): Promise<any> {
         var result = await this.reviewService.getManageReviews();
         res.status(result.success ? 200 : 400).json(result);
         return;
@@ -29,8 +30,8 @@ export class ReviewController {
     })
     @ApiResponse({status: 200, description: 'Operation done successfully'})
     @ApiResponse({status: 400, description: 'Error during operation'})
-    async postManageReviews(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.reviewService.postManageReviews(req);
+    async postManageReviews(@Body() postManageReviews: PostManageReviewsDTO, @Res() res: Response): Promise<any> {
+        var result = await this.reviewService.postManageReviews(postManageReviews);
         res.status(result.success ? 200 : 400).json(result);
         return;
     }

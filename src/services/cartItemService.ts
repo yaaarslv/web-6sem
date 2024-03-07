@@ -10,8 +10,8 @@ export class CartItemService {
                 @InjectRepository(Products) private productRepository: Repository<Products>) {
     }
 
-    async cart(req: Request): Promise<any> {
-        const data = req.body;
+    async cart(data): Promise<any> {
+
 
         try {
             const requiredKeys = ["cart_id"];
@@ -40,8 +40,8 @@ export class CartItemService {
         }
     }
 
-    async changeQuantity(req: Request): Promise<any> {
-        const data = req.body;
+    async changeQuantity(data): Promise<any> {
+
 
         const requiredKeys = ['cartProductId', 'newQuantity'];
 
@@ -59,8 +59,8 @@ export class CartItemService {
         }
     }
 
-    async deleteCartProduct(req: Request): Promise<any> {
-        const data = req.body;
+    async deleteCartProduct(data): Promise<any> {
+
 
         const requiredKeys = ['cartProductId'];
 
@@ -78,8 +78,8 @@ export class CartItemService {
         }
     }
 
-    async addProductToCart(req: Request): Promise<any> {
-        const data = req.body;
+    async addProductToCart(data): Promise<any> {
+
 
         const requiredKeys = ['productId', 'cart_id'];
 
@@ -87,7 +87,11 @@ export class CartItemService {
             const productId = data['productId'];
             const cart_id = data['cart_id'];
             try {
-                const cart_item = this.cartItemRepository.create({cart_id: cart_id, product_id: productId, quantity: 1});
+                const cart_item = this.cartItemRepository.create({
+                    cart_id: cart_id,
+                    product_id: productId,
+                    quantity: 1
+                });
                 await this.cartItemRepository.save(cart_item);
                 return {'success': true, 'cart_item_id': cart_item.cart_item_id};
             } catch (e) {

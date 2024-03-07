@@ -1,7 +1,11 @@
 import {ApiBody, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {Controller, Post, Req, Res} from "@nestjs/common";
+import {Body, Controller, Post, Res} from "@nestjs/common";
 import {Response} from "express";
 import {CartItemService} from "../services/cartItemService";
+import {CartDTO} from "../dto/cartDTO";
+import {DeleteCartProductDTO} from "../dto/deleteCartProductDTO";
+import {ChangeQuantityDTO} from "../dto/changeQuantityDTO";
+import {AddProductToCartDTO} from "../dto/addProductToCartDTO";
 
 @ApiTags('cart')
 @Controller("/cart")
@@ -19,8 +23,8 @@ export class CartController {
     })
     @ApiResponse({status: 200, description: 'Operation done successfully'})
     @ApiResponse({status: 400, description: 'Error during operation'})
-    async cart(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.cartItemService.cart(req);
+    async cart(@Body() cartDTO: CartDTO, @Res() res: Response): Promise<any> {
+        var result = await this.cartItemService.cart(cartDTO);
         res.status(result.success ? 200 : 400).json(result);
         return;
     }
@@ -31,14 +35,14 @@ export class CartController {
         schema: {
             properties: {
                 cartProductId: { type: 'string' },
-                newQuantity: { type: 'string' },
+                newQuantity: { type: 'integer' },
             },
         },
     })
     @ApiResponse({ status: 200, description: 'Quantity changed successfully' })
     @ApiResponse({ status: 400, description: 'Error during operation' })
-    async changeQuantity(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.cartItemService.changeQuantity(req);
+    async changeQuantity(@Body() changeQuantity: ChangeQuantityDTO, @Res() res: Response): Promise<any> {
+        var result = await this.cartItemService.changeQuantity(changeQuantity);
         res.status(result.success ? 200 : 400).json(result);
         return;
     }
@@ -54,8 +58,8 @@ export class CartController {
     })
     @ApiResponse({status: 200, description: 'Product removed from cart successfully'})
     @ApiResponse({status: 400, description: 'Error during operation'})
-    async deleteCartProduct(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.cartItemService.deleteCartProduct(req);
+    async deleteCartProduct(@Body() deleteCartProduct: DeleteCartProductDTO, @Res() res: Response): Promise<any> {
+        var result = await this.cartItemService.deleteCartProduct(deleteCartProduct);
         res.status(result.success ? 200 : 400).json(result);
         return;
     }
@@ -72,8 +76,8 @@ export class CartController {
     })
     @ApiResponse({ status: 200, description: 'Product added to cart successfully' })
     @ApiResponse({ status: 400, description: 'Error during operation' })
-    async addProductToCart(@Req() req: Request, @Res() res: Response): Promise<any> {
-        var result = await this.cartItemService.addProductToCart(req);
+    async addProductToCart(@Body() addProductToCart: AddProductToCartDTO, @Res() res: Response): Promise<any> {
+        var result = await this.cartItemService.addProductToCart(addProductToCart);
         res.status(result.success ? 200 : 400).json(result);
         return;
     }
