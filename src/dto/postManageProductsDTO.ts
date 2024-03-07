@@ -1,11 +1,15 @@
-import {IsNotEmpty, IsNumber, IsOptional, IsString} from "class-validator";
+import {IsNumber, IsOptional, IsString} from "class-validator";
 
 export class PostManageProductsDTO {
-    @IsNotEmpty()
+    @IsOptional()
+    @IsNumber()
+    cart_id: number;
+
+    @IsOptional()
     @IsNumber()
     productId: number;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     action: string;
 
