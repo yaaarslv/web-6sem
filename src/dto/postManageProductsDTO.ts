@@ -2,8 +2,8 @@ import {IsNumber, IsOptional, IsString} from "class-validator";
 
 export class PostManageProductsDTO {
     @IsOptional()
-    @IsNumber()
-    cart_id?: number;
+    @IsString()
+    cart_id?: string;
 
     @IsOptional()
     @IsNumber()
