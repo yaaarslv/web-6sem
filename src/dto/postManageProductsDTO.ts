@@ -1,9 +1,9 @@
-import {IsNotEmpty, IsOptional, IsString} from "class-validator";
+import {IsNotEmpty, IsNumber, IsOptional, IsString} from "class-validator";
 
 export class PostManageProductsDTO {
     @IsNotEmpty()
-    @IsString()
-    productId: string;
+    @IsNumber()
+    productId: number;
 
     @IsNotEmpty()
     @IsString()

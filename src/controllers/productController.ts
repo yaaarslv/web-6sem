@@ -24,7 +24,7 @@ export class ProductController {
     @ApiBody({
         schema: {
             properties: {
-                productId: {type: 'string'},
+                productId: {type: 'integer'},
                 action: {type: 'string'}
             }
         }
