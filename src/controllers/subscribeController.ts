@@ -1,4 +1,4 @@
-import {ApiBody, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {ApiBody, ApiOAuth2, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {Body, Controller, Post, Res} from "@nestjs/common";
 import {Response} from "express";
 import {SubscribeService} from "../services/subscribeService";
@@ -10,6 +10,7 @@ export class SubscribeController {
     constructor(private subscribeService: SubscribeService){};
 
     @Post("/subscript")
+    @ApiOAuth2(['subscribers:write'])
     @ApiOperation({summary: 'Subscribe to notifications'})
     @ApiBody({
         schema: {
@@ -27,6 +28,7 @@ export class SubscribeController {
     }
 
     @Post("/unsubscript")
+    @ApiOAuth2(['subscribers:write'])
     @ApiOperation({summary: 'Subscribe from notifications'})
     @ApiBody({
         schema: {

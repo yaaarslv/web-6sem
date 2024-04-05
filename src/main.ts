@@ -3,7 +3,9 @@ import {NestExpressApplication} from '@nestjs/platform-express';
 import {join} from 'path';
 import {AppModule} from './app.module';
 import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
-import { ValidationPipe } from '@nestjs/common';
+import {ValidationPipe} from '@nestjs/common';
+import * as session from 'express-session';
+import * as passport from 'passport';
 
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule,);
@@ -15,7 +17,9 @@ async function bootstrap() {
         .setTitle('Petshop')
         .setDescription('The Petshop API description')
         .setVersion('1.0')
+        .addOAuth2()
         .build();
+
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api', app, document);
 
@@ -23,6 +27,20 @@ async function bootstrap() {
     app.set('views', join(__dirname, '..', 'views', 'layouts'));
     app.useStaticAssets(join(__dirname, '..', 'public'));
     app.useGlobalPipes(new ValidationPipe());
+    app.use(session({
+        secret: "wfeffpoefpofierfefjefjw0",
+        saveUninitialized: false,
+        resave: false,
+        cookie: {
+            maxAge: 600000
+        }
+    }));
+    app.use(passport.initialize());
+    app.use(passport.session());
+    app.enableCors({
+        origin: 'https://beb-web.onrender.com',
+        methods: ['GET', 'POST'],
+    });
     await app.listen(3000);
 }
 

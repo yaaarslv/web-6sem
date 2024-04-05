@@ -1,4 +1,4 @@
-import {ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {ApiBody, ApiOAuth2, ApiOperation, ApiParam, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {Body, Controller, Get, Post, Res} from "@nestjs/common";
 import {Response} from "express";
 import {ProductService} from "../services/productService";
@@ -20,6 +20,7 @@ export class ProductController {
     }
 
     @Post("/products")
+    @ApiOAuth2(['products:write'])
     @ApiOperation({summary: 'Manage products'})
     @ApiBody({
         schema: {
@@ -50,6 +51,7 @@ export class ProductController {
     }
 
     @Post("/addRate")
+    @ApiOAuth2(['products:write'])
     @ApiOperation({summary: 'Add rating'})
     @ApiBody({
         schema: {

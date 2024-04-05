@@ -1,4 +1,4 @@
-import {ApiBody, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {ApiBody, ApiOAuth2, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {Body, Controller, Get, Post, Res} from "@nestjs/common";
 import {Response} from "express";
 import {UserService} from "../services/userService";
@@ -13,23 +13,23 @@ import {ConfirmEmailDTO} from "../dto/confirmEmailDTO";
 export class UserController {
     constructor(private userService: UserService){};
 
-    @Post('/login')
-    @ApiOperation({summary: 'LoginDTO user'})
-    @ApiBody({
-        schema: {
-            properties: {
-                email: {type: 'string'},
-                password: {type: 'string', format: 'password'}
-            }
-        }
-    })
-    @ApiResponse({status: 200, description: 'User logged in successfully'})
-    @ApiResponse({status: 400, description: 'Invalid credentials'})
-    async login(@Body() login: LoginDTO, @Res() res: Response): Promise<any> {
-        var result = await this.userService.login(login);
-        res.status(result.success ? 200 : 400).json(result);
-        return;
-    }
+    // @Post('/login')
+    // @ApiOperation({summary: 'LoginDTO user'})
+    // @ApiBody({
+    //     schema: {
+    //         properties: {
+    //             email: {type: 'string'},
+    //             password: {type: 'string', format: 'password'}
+    //         }
+    //     }
+    // })
+    // @ApiResponse({status: 200, description: 'User logged in successfully'})
+    // @ApiResponse({status: 400, description: 'Invalid credentials'})
+    // async login(@Body() login: LoginDTO, @Res() res: Response): Promise<any> {
+    //     var result = await this.userService.login(login);
+    //     res.status(result.success ? 200 : 400).json(result);
+    //     return;
+    // }
 
     @Post("/checkRoleIsBanned")
     @ApiOperation({summary: 'Check role and user is banned'})
@@ -105,6 +105,7 @@ export class UserController {
     }
 
     @Get("/users")
+    @ApiOAuth2(['users:read'])
     @ApiOperation({summary: 'Get all users'})
     @ApiResponse({status: 200, description: 'Returns all users'})
     async getManageUsers(@Res() res: Response): Promise<any> {
@@ -114,6 +115,7 @@ export class UserController {
     }
 
     @Post("/users")
+    @ApiOAuth2(['users:write'])
     @ApiOperation({summary: 'Manage users'})
     @ApiBody({
         schema: {

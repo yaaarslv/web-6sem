@@ -11,6 +11,9 @@ export class Users {
     email: string;
 
     @Column()
+    displayName: string;
+
+    @Column()
     password: string;
 
     @Column()
@@ -25,12 +28,15 @@ export class Users {
     @Column()
     emailconfirmed: boolean;
 
-    constructor(email: string, password: string, role: string, is_banned: boolean,  emailconfirmed: boolean) {
+    constructor(email: string,
+                password: string, role: string, is_banned: boolean,
+                emailconfirmed: boolean, displayName: string) {
         this.email = email;
         this.password = password;
         this.token = jwt.sign({ email: email }, 'secret_key', { algorithm: 'HS256' });
         this.role = role;
         this.is_banned = is_banned;
         this.emailconfirmed = emailconfirmed;
+        this.displayName = displayName;
     }
 }

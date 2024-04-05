@@ -3,12 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (signOutButton) {
         signOutButton.addEventListener('click', function (event) {
             event.preventDefault();
-            localStorage.removeItem('token');
-            localStorage.removeItem('role')
-            localStorage.removeItem('isBanned')
-            localStorage.removeItem('email')
-            localStorage.removeItem('emailConfirmed')
-            localStorage.removeItem('cart_id')
+            localStorage.clear();
             window.location.href = 'index';
         });
     }

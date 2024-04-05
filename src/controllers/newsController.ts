@@ -1,4 +1,4 @@
-import {ApiBody, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {ApiBody, ApiOAuth2, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {Body, Controller, Get, Post, Res} from "@nestjs/common";
 import {Response} from "express";
 import {NewsService} from "../services/newsService";
@@ -19,6 +19,7 @@ export class NewsController {
     }
 
     @Post("/postNews")
+    @ApiOAuth2(['news:write'])
     @ApiOperation({summary: 'Add news'})
     @ApiBody({
         schema: {

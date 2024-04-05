@@ -344,7 +344,7 @@ async function fetchAndDisplayProducts() {
 
                             addToCartButton.addEventListener('click', async function () {
                                 const editData = {
-                                    productId: product.productid,
+                                    productId: product.productid.toString(),
                                     cart_id: cart_id
                                 };
 

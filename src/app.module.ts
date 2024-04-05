@@ -1,4 +1,4 @@
-import {Module} from '@nestjs/common';
+import {MiddlewareConsumer, Module} from '@nestjs/common';
 import {AppController} from './controllers/app.controller';
 import {AppService} from './app.service';
 import {APP_INTERCEPTOR} from '@nestjs/core';
@@ -7,8 +7,6 @@ import {TypeOrmModule} from '@nestjs/typeorm';
 import {Products} from "./models/Products";
 import {Users} from "./models/User";
 import {Cart_items} from "./models/Cart_items";
-import { MiddlewareConsumer, RequestMethod } from '@nestjs/common';
-import * as express from 'express';
 import {Carts} from "./models/Carts";
 import {Reviews} from "./models/Review";
 import {News} from "./models/News";
@@ -25,10 +23,17 @@ import {ProductController} from "./controllers/productController";
 import {ReviewController} from "./controllers/reviewController";
 import {SubscribeController} from "./controllers/subscribeController";
 import {UserController} from "./controllers/userController";
+import {AuthModule} from "./auth/auth.module";
+import {PassportModule} from "@nestjs/passport";
+import {UnauthorizedMiddleware} from "./unauthorized.middleware";
+import {RequestMethod} from "@nestjs/common/enums";
+import {AdminRoleMiddleware} from "./adminRole.middleware";
+import {SuperadminRoleMiddleware} from "./superadminRoleMiddleware";
 
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Users, Products, Cart_items, Carts, Reviews, News, Subscribers]),
+    imports: [AuthModule,
+        TypeOrmModule.forFeature([Users, Products, Cart_items, Carts, Reviews, News, Subscribers]),
         TypeOrmModule.forRoot({
             "type": "postgres",
             "ssl": true,
@@ -36,10 +41,11 @@ import {UserController} from "./controllers/userController";
             "username": "yaaarslv",
             "password": "bC4ZAwVvoU0u",
             "database": "neondb",
-            "synchronize": false,
+            "synchronize": true,
             "logging": false,
             "entities": [Users, Products, Cart_items, Carts, Reviews, News, Subscribers]
         }),
+        PassportModule.register({session: true})
     ],
     controllers: [AppController, CartController, NewsController, ProductController, ReviewController, SubscribeController, UserController],
     providers: [
@@ -54,7 +60,16 @@ import {UserController} from "./controllers/userController";
 export class AppModule {
     configure(consumer: MiddlewareConsumer) {
         consumer
-            .apply(express.urlencoded({ extended: true }))
-            .forRoutes({ path: '/*', method: RequestMethod.ALL });
+            .apply(SuperadminRoleMiddleware)
+            .forRoutes({path: '/user/users', method: RequestMethod.ALL}, '/user/addUser');
+
+        consumer
+            .apply(AdminRoleMiddleware)
+            .forRoutes('/news/postNews', {path: '/product/products', method: RequestMethod.POST});
+
+        consumer
+            .apply(UnauthorizedMiddleware)
+            .forRoutes({path: '/user/users', method: RequestMethod.ALL}, '/cart', '/news/postNews', {path: '/product/products', method: RequestMethod.POST},
+                '/product/addRate', '/review/postReviews', '/subscribe/subscript', '/subscribe/unsubscript' , '/user/addUser');
     }
 }

@@ -1,4 +1,4 @@
-import {ApiBody, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {ApiBody, ApiOAuth2, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {Body, Controller, Get, Post, Res} from "@nestjs/common";
 import {Response} from "express";
 import {ReviewService} from "../services/reviewService";
@@ -19,6 +19,7 @@ export class ReviewController {
     }
 
     @Post("/postReviews")
+    @ApiOAuth2(['reviews:write'])
     @ApiOperation({summary: 'Add review'})
     @ApiBody({
         schema: {

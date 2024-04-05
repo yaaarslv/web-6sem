@@ -1,4 +1,4 @@
-import {ApiBody, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {ApiBody, ApiOAuth2, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {Body, Controller, Post, Res} from "@nestjs/common";
 import {Response} from "express";
 import {CartItemService} from "../services/cartItemService";
@@ -13,6 +13,7 @@ export class CartController {
     constructor(private cartItemService: CartItemService){};
 
     @Post("/cart")
+    @ApiOAuth2(['carts:write'])
     @ApiOperation({summary: 'Get products from user cart'})
     @ApiBody({
         schema: {
@@ -30,6 +31,7 @@ export class CartController {
     }
 
     @Post("/changeQuantity")
+    @ApiOAuth2(['carts:write'])
     @ApiOperation({ summary: 'Change quantity' })
     @ApiBody({
         schema: {
@@ -48,6 +50,7 @@ export class CartController {
     }
 
     @Post("/deleteCartProduct")
+    @ApiOAuth2(['carts:write'])
     @ApiOperation({summary: 'Remove product from user cart'})
     @ApiBody({
         schema: {
@@ -65,6 +68,7 @@ export class CartController {
     }
 
     @Post("/addProductToCart")
+    @ApiOAuth2(['carts:write'])
     @ApiOperation({ summary: 'Add product to user cart' })
     @ApiBody({
         schema: {
