@@ -13,6 +13,37 @@
     <script src="scripts/checkTimeout.js"></script>
     <script src="scripts/checkAdmin.js"></script>
     <script src="scripts/searchScript.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        const socket = io('https://beb-web.onrender.com');
+        socket.on('userUpdate', async (data) => {
+            const myId = localStorage.getItem("myId");
+            if (myId) {
+                if (myId === data.userId) {
+                    console.log('Received user update:', data);
+                    toastr.options.timeOut = null;
+                    toastr.options.positionClass = "toast-bottom-right";
+                    if (data["role"]) {
+                        localStorage.setItem("role", data.role)
+                        toastr.info(`Вам выдана роль: ${data.role}. Обновите страницу!`)
+                    } else if (data["deletedId"]) {
+                        localStorage.clear();
+                        toastr.info(`Ваш аккаунт был удалён. Обновите страницу!`)
+                    } else if (data["ban"]) {
+                        toastr.error(`Ваш аккаунт был ${data.ban === "true" ? "забанен" : "разбанен"}. Обновите страницу!`)
+                        if (data.ban === "true") {
+                            localStorage.clear();
+                            await new Promise(resolve => setTimeout(resolve, 5000));
+                            window.location.href = "index";
+                        }
+                    }
+                }
+            }
+        });
+    </script>
     <!--        <link rel="stylesheet" href="/styles/outlines.css">-->
 </head>
 <body>

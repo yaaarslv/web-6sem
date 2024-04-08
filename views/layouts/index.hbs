@@ -8,11 +8,75 @@
     <link rel="icon" href="/images/logo2.jpg">
     <!--    <link rel="stylesheet" href="/styles/style.css">-->
     {{> styles}}
-    <script src="scripts/successfulAuth.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const id = urlParams.get('id');
+        const email = urlParams.get('email');
+        const displayName = urlParams.get('displayName');
+        const token = urlParams.get('token');
+        const role = urlParams.get('role');
+        const is_banned = urlParams.get('is_banned');
+        const emailconfirmed = urlParams.get('emailconfirmed');
+        const cart_id = urlParams.get('cart_id');
+
+        if (id && email && displayName && token && role && is_banned && emailconfirmed && cart_id) {
+            if (is_banned === "true"){
+                localStorage.clear();
+                document.addEventListener("DOMContentLoaded", function (){
+                    toastr.options.timeOut = null;
+                    toastr.options.positionClass = "toast-top-right";
+                    toastr.error(`Вы были забанены. Вход в аккаунт невозможен.`)
+                })
+            } else {
+                localStorage.setItem('token', token);
+                localStorage.setItem('myId', id);
+                localStorage.setItem('role', role);
+                localStorage.setItem('isBanned', is_banned);
+                localStorage.setItem('email', email);
+                localStorage.setItem('emailConfirmed', emailconfirmed);
+                localStorage.setItem('cart_id', cart_id);
+            }
+
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    </script>
     <script src="scripts/loadTime.js"></script>
     <script src="scripts/checkAuth.js"></script>
+    <script src="scripts/checkAdmin.js"></script>
     <script src="scripts/checkTimeout.js"></script>
     <script src="scripts/searchScript.js"></script>
+    <script>
+        const socket = io('https://beb-web.onrender.com');
+        socket.on('userUpdate', async (data) => {
+            const myId = localStorage.getItem("myId");
+            if (myId) {
+                if (myId === data.userId) {
+                    console.log('Received user update:', data);
+                    toastr.options.timeOut = null;
+                    toastr.options.positionClass = "toast-bottom-right";
+                    if (data["role"]) {
+                        localStorage.setItem("role", data.role)
+                        toastr.info(`Вам выдана роль: ${data.role}. Обновите страницу!`)
+                    } else if (data["deletedId"]) {
+                        localStorage.clear();
+                        toastr.info(`Ваш аккаунт был удалён. Обновите страницу!`)
+                    } else if (data["ban"]) {
+                        toastr.error(`Ваш аккаунт был ${data.ban === "true" ? "забанен" : "разбанен"}. Обновите страницу!`)
+                        if (data.ban === "true") {
+                            localStorage.clear();
+                            await new Promise(resolve => setTimeout(resolve, 5000));
+                            window.location.href = "index";
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </head>
 <body>
 <header>

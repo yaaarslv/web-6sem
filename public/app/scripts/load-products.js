@@ -50,14 +50,22 @@ async function changeName(productId) {
             return
         }
 
-        const formData = new FormData();
-        formData.append("newName", selectedName);
-        formData.append("productId", productId);
-        formData.append("action", "change_name");
+        // const formData = new FormData();
+        // formData.append("newName", selectedName);
+        // formData.append("productId", productId);
+        // formData.append("action", "change_name");
+        const data = {
+            "newName": selectedName,
+            "productId": productId,
+            "action": "change_name"
+        }
 
         await fetch(`https://beb-web.onrender.com/product/products`, {
             method: 'POST',
-            body: formData
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
         }).then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -118,14 +126,22 @@ async function changePrice(productId) {
             return;
         }
 
-        const formData = new FormData();
-        formData.append("newPrice", selectedPrice);
-        formData.append("productId", productId);
-        formData.append("action", "change_price");
+        // const formData = new FormData();
+        const data = {
+            "newPrice": selectedPrice,
+            "productId": productId,
+            "action": "change_price"
+        }
+        // formData.append("newPrice", selectedPrice);
+        // formData.append("productId", productId);
+        // formData.append("action", "change_price");
 
         await fetch(`https://beb-web.onrender.com/product/products`, {
             method: 'POST',
-            body: formData
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
         }).then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -190,14 +206,22 @@ async function changeCategory(productId) {
     applyButton.addEventListener('click', async () => {
         const selectedCategory = radios.querySelector('input[name="category"]:checked').value;
 
-        const formData = new FormData();
-        formData.append("newCategory", selectedCategory);
-        formData.append("productId", productId);
-        formData.append("action", "change_category");
+        // const formData = new FormData();
+        // formData.append("newCategory", selectedCategory);
+        // formData.append("productId", productId);
+        // formData.append("action", "change_category");
+        const data = {
+            "newCategory": selectedCategory,
+            "productId": productId,
+            "action": "change_category"
+        }
 
         await fetch(`https://beb-web.onrender.com/product/products`, {
             method: 'POST',
-            body: formData
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
         }).then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -258,14 +282,22 @@ async function changeBrand(productId) {
             return
         }
 
-        const formData = new FormData();
-        formData.append("newBrand", selectedBrand);
-        formData.append("productId", productId);
-        formData.append("action", "change_brand");
+        // const formData = new FormData();
+        // formData.append("newBrand", selectedBrand);
+        // formData.append("productId", productId);
+        // formData.append("action", "change_brand");
+        const data = {
+            "newBrand": selectedBrand,
+            "productId": productId,
+            "action": "change_brand"
+        }
 
         await fetch(`https://beb-web.onrender.com/product/products`, {
             method: 'POST',
-            body: formData
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
         }).then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -331,14 +363,22 @@ async function changeCount(productId) {
             return;
         }
 
-        const formData = new FormData();
-        formData.append("newCount", selectedCount);
-        formData.append("productId", productId);
-        formData.append("action", "change_count");
+        // const formData = new FormData();
+        // formData.append("newCount", selectedCount);
+        // formData.append("productId", productId);
+        // formData.append("action", "change_count");
+        const data = {
+            "newCount": selectedCount,
+            "productId": productId,
+            "action": "change_count"
+        }
 
         await fetch(`https://beb-web.onrender.com/product/products`, {
             method: 'POST',
-            body: formData
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
         }).then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -473,13 +513,12 @@ async function deleteProduct(productId) {
                 action: "delete_product",
             };
 
-            const formData = new FormData();
-            formData.append("productId", productId);
-            formData.append("action", "delete_product");
-
             await fetch(`https://beb-web.onrender.com/product/products`, {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
             }).then(response => response.json())
                 .then(data => {
                     if (data.success) {
@@ -547,9 +586,9 @@ async function loadProductsData() {
         if (productsData.products) {
             productsData.products.forEach(product => {
                 const row = document.createElement('tr');
-                row.id = `product-${product.id}`;
+                row.id = `product-${product.productid}`;
                 row.innerHTML = `
-<!--                    <td class="productId-cell">${product.id}</td>-->
+<!--                    <td class="productId-cell">${product.productid}</td>-->
                     <td class="name-cell">${product.name}</td>
                     <td class="price-cell">${product.price}</td>
                     <td class="category-cell">${product.category}</td>
@@ -559,17 +598,17 @@ async function loadProductsData() {
                     <td class="count-cell">${product.count}</td>
                     <td class="addedBy-cell">
                     <div id="addedByContent" style="display: none;">${product.addedby}</div>
-                    <button id="showButton" onclick="toggleVisibility('${product.id}')" style="font-size: 10px">Показать</button>
-                    <button id="hideButton" onclick="toggleVisibility('${product.id}')" style="display: none; font-size: 10px">Скрыть</button>
+                    <button id="showButton" onclick="toggleVisibility('${product.productid}')" style="font-size: 10px">Показать</button>
+                    <button id="hideButton" onclick="toggleVisibility('${product.productid}')" style="display: none; font-size: 10px">Скрыть</button>
                     </td>
                     <td class="actions">
-                        <button class="edit-name-button" onclick="changeName('${product.id}')">Изменить название</button>
-                        <button class="edit-price-button" onclick="changePrice('${product.id}')">Изменить цену</button>
-                        <button class="edit-category-button" onclick="changeCategory('${product.id}')">Изменить категорию</button>
-                        <button class="edit-brand-button" onclick="changeBrand('${product.id}')">Изменить бренд</button>
-                        <button class="edit-image-button" onclick="changeImage('${product.id}')">Изменить изображение</button>
-                        <button class="edit-count-button" onclick="changeCount('${product.id}')">Изменить количество</button>
-                        <button class="delete-button" onclick="deleteProduct('${product.id}')">Удалить</button>
+                        <button class="edit-name-button" onclick="changeName('${product.productid}')">Изменить название</button>
+                        <button class="edit-price-button" onclick="changePrice('${product.productid}')">Изменить цену</button>
+                        <button class="edit-category-button" onclick="changeCategory('${product.productid}')">Изменить категорию</button>
+                        <button class="edit-brand-button" onclick="changeBrand('${product.productid}')">Изменить бренд</button>
+                        <button class="edit-image-button" onclick="changeImage('${product.productid}')">Изменить изображение</button>
+                        <button class="edit-count-button" onclick="changeCount('${product.productid}')">Изменить количество</button>
+                        <button class="delete-button" onclick="deleteProduct('${product.productid}')">Удалить</button>
                     </td>
                 `;
                 productsTableBody.appendChild(row);

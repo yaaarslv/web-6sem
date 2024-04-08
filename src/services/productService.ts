@@ -3,11 +3,36 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {Products} from "../models/Products";
 import {Repository} from "typeorm";
 import {Cart_items} from "../models/Cart_items";
+import {Server, Socket} from 'socket.io';
+import {
+    OnGatewayConnection,
+    OnGatewayDisconnect,
+    OnGatewayInit,
+    WebSocketGateway,
+    WebSocketServer
+} from "@nestjs/websockets";
+import {ProductGateway} from "../websockets/product.gateway";
 
 @Injectable()
-export class ProductService {
+@WebSocketGateway()
+export class ProductService implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
     constructor(@InjectRepository(Products) private productRepository: Repository<Products>,
-                @InjectRepository(Cart_items) private cartItemRepository: Repository<Cart_items>) {
+                @InjectRepository(Cart_items) private cartItemRepository: Repository<Cart_items>,
+                private readonly productGateway: ProductGateway) {
+    }
+
+    @WebSocketServer() server: Server;
+
+    afterInit(server: Server) {
+        console.log('WebSocket initialized');
+    }
+
+    handleConnection(client: Socket, ...args: any[]) {
+        console.log(`Client connected: ${client.id}`);
+    }
+
+    handleDisconnect(client: Socket) {
+        console.log(`Client disconnected: ${client.id}`);
     }
 
     async getManageProducts(): Promise<any> {
@@ -29,10 +54,13 @@ export class ProductService {
                 if (action === "change_name") {
                     const newName = data['newName'];
                     await this.productRepository.query("UPDATE Products SET name = $1 WHERE productId = $2", [newName, productId]);
+                    await this.productGateway.sendProductUpdate(productId, {name: newName});
                     return {success: true, message: `Название товар с id ${productId} изменено на ${newName}`};
                 } else if (action === "delete_product") {
                     await this.productRepository.query("DELETE FROM Products WHERE productId = $1", [productId]);
                     await this.productRepository.query("DELETE FROM Images WHERE imageId = $1", [productId]);
+                    await this.cartItemRepository.delete({product_id: productId});
+                    await this.productGateway.sendProductUpdate(productId, {deletedId: productId});
                     return {success: true, message: `Товар с id ${productId} успешно удален`};
                 } else if (action === "change_price") {
                     let newPrice = data["newPrice"];
@@ -42,6 +70,8 @@ export class ProductService {
                     }
 
                     await this.productRepository.query("UPDATE Products SET price = $1 WHERE productId = $2", [newPrice, productId]);
+                    await this.productGateway.sendProductUpdate(productId, {price: newPrice});
+
                     return {
                         success: true,
                         message: `Цена товара с id ${productId} успешно изменена на ${newPrice}`
@@ -49,6 +79,7 @@ export class ProductService {
                 } else if (action === "change_category") {
                     const newCategory = data["newCategory"];
                     await this.productRepository.query("UPDATE Products SET category = $1 WHERE productId = $2", [newCategory, productId]);
+                    await this.productGateway.sendProductUpdate(productId, {category: newCategory});
                     return {
                         success: true,
                         message: `Категория товара с id ${productId} успешно изменена на ${newCategory}`
@@ -56,13 +87,27 @@ export class ProductService {
                 } else if (action === "change_brand") {
                     const newBrand = data["newBrand"];
                     await this.productRepository.query("UPDATE Products SET brand = $1 WHERE productId = $2", [newBrand, productId]);
+                    await this.productGateway.sendProductUpdate(productId, {brand: newBrand});
                     return {
                         success: true,
                         message: `Бренд товара с id ${productId} успешно изменен на ${newBrand}`
                     };
                 } else if (action === "change_count") {
                     const newCount = data["newCount"];
-                    await this.productRepository.query("UPDATE Products SET count = $1 WHERE productId = $2", [newCount, productId]);
+                    if (newCount == "0"){
+                        await this.productRepository.query("UPDATE Products SET count = $1, availability = $2 WHERE productId = $3", [newCount, false, productId]);
+                    } else {
+                        await this.productRepository.query("UPDATE Products SET count = $1, availability = $2 WHERE productId = $3", [newCount, true, productId]);
+                    }
+
+                    const cart_items_to_edit = await this.cartItemRepository.findBy({product_id: productId});
+                    cart_items_to_edit.forEach((item) => {
+                        if (item.quantity > parseInt(newCount)) {
+                            this.cartItemRepository.update({cart_item_id: item.cart_item_id}, {quantity: newCount});
+                        }
+                    })
+
+                    await this.productGateway.sendProductUpdate(productId, {count: newCount});
                     return {
                         success: true,
                         message: `Количество товара с id ${productId} успешно изменено на ${newCount}`
@@ -113,7 +158,7 @@ export class ProductService {
     }
 
     async addRate(data): Promise<any> {
-        
+
 
         const requiredKeys = ["id", "myRating"];
 

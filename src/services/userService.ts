@@ -4,13 +4,32 @@ import {Users} from "../models/User";
 import {Repository} from "typeorm";
 import {Carts} from "../models/Carts";
 import {AppService} from "../app.service";
+import {UserGateway} from "../websockets/user.gateway";
+import {WebSocketGateway, WebSocketServer} from "@nestjs/websockets";
+import {Server, Socket} from "socket.io";
 let bcrypt = require('bcrypt');
 
 @Injectable()
+@WebSocketGateway()
 export class UserService {
     constructor(private appService: AppService,
                 @InjectRepository(Users) private userRepository: Repository<Users>,
-                @InjectRepository(Carts) private cartsRepository: Repository<Carts>) {
+                @InjectRepository(Carts) private cartsRepository: Repository<Carts>,
+                private readonly userGateway: UserGateway) {
+    }
+
+    @WebSocketServer() server: Server;
+
+    afterInit(server: Server) {
+        console.log('WebSocket initialized');
+    }
+
+    handleConnection(client: Socket, ...args: any[]) {
+        console.log(`Client connected: ${client.id}`);
+    }
+
+    handleDisconnect(client: Socket) {
+        console.log(`Client disconnected: ${client.id}`);
     }
 
     async login(data): Promise<any> {
@@ -216,6 +235,7 @@ export class UserService {
                 try {
                     const newRole = data['newRole'];
                     await this.userRepository.query("UPDATE Users SET role = $1 WHERE id = $2", [newRole, userId]);
+                    await this.userGateway.sendUserUpdate(userId, {role: newRole});
 
                     return {
                         success: true,
@@ -231,6 +251,7 @@ export class UserService {
             } else if (action === 'delete_user') {
                 try {
                     await this.userRepository.query("DELETE FROM Users WHERE Id = $1", [userId]);
+                    await this.userGateway.sendUserUpdate(userId, {deletedId: userId});
 
                     return {
                         success: true,
@@ -247,6 +268,7 @@ export class UserService {
                 try {
                     const isBanned = data['isBanned'];
                     await this.userRepository.query("UPDATE Users SET is_banned = $1 WHERE id = $2", [isBanned, userId]);
+                    await this.userGateway.sendUserUpdate(userId, {ban: isBanned});
 
                     return {
                         success: true,

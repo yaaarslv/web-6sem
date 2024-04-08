@@ -14,6 +14,49 @@
     <script src="scripts/checkTimeout.js"></script>
     <script src="scripts/getProducts.js"></script>
     <script src="scripts/searchScript.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        const socket = io('https://beb-web.onrender.com');
+        socket.on('productUpdate', (data) => {
+            console.log('Received product update:', data);
+            toastr.options.timeOut = null;
+            toastr.options.positionClass = "toast-bottom-right";
+            if (data["price"]){
+                toastr.info(`Продукт с ID ${data.productId} был обновлён. Новая цена: ${data.price} руб. Обновите страницу!`)
+            } else if (data["name"]){
+                toastr.info(`Продукт с ID ${data.productId} был обновлён. Новое название: ${data.name}. Обновите страницу!`)
+            } else if (data["category"]){
+                toastr.info(`Продукт с ID ${data.productId} был обновлён. Новая категория: ${data.category}. Обновите страницу!`)
+            } else if (data["deletedId"]){
+                toastr.info(`Продукт с ID ${data.productId} был удалён из магазина. Обновите страницу!`)
+            } else if (data["brand"]){
+                toastr.info(`Продукт с ID ${data.productId} был обновлён. Новый бренд: ${data.brand}. Обновите страницу!`)
+            } else if (data["count"]){
+                toastr.info(`Продукт с ID ${data.productId} был обновлён. Новое количество: ${data.count}. Обновите страницу!`)
+            }
+        });
+
+        socket.on('userUpdate', (data) => {
+            const myId = localStorage.getItem("myId");
+            if (myId){
+                if (myId === data.userId){
+                    console.log('Received user update:', data);
+                    toastr.options.timeOut = null;
+                    toastr.options.positionClass = "toast-bottom-right";
+                    if (data["role"]){
+                        toastr.info(`Вам выдана роль: ${data.role}. Обновите страницу!`)
+                    } else if (data["deletedId"]){
+                        toastr.info(`Ваш аккаунт был удалён. Обновите страницу!`)
+                    } else if (data["ban"]){
+                        toastr.info(`Ваш аккаунт был ${data.ban === "true" ? "забанен" : "разбанен"}. Обновите страницу!`)
+                    }
+                }
+            }
+        });
+    </script>
     <!--        <link rel="stylesheet" href="/styles/outlines.css">-->
 </head>
 <body>

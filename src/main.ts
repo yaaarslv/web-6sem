@@ -42,6 +42,7 @@ async function bootstrap() {
         methods: ['GET', 'POST'],
     });
     await app.listen(3000);
+    console.log(`Application is running on: ${await app.getUrl()}`);
 }
 
 bootstrap();

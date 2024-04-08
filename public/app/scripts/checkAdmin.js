@@ -19,10 +19,15 @@ async function getRoleFromServer() {
                     const isBanned = data.is_banned;
                     const emailConfirmed = data.emailconfirmed;
                     const cart_id = data.cart_id;
-                    localStorage.setItem('role', role);
-                    localStorage.setItem('isBanned', isBanned);
-                    localStorage.setItem('emailConfirmed', emailConfirmed);
-                    localStorage.setItem('cart_id', cart_id);
+                    if (isBanned){
+                        localStorage.clear();
+                        window.location.href = "index";
+                    } else {
+                        localStorage.setItem('role', role);
+                        localStorage.setItem('isBanned', isBanned);
+                        localStorage.setItem('emailConfirmed', emailConfirmed);
+                        localStorage.setItem('cart_id', cart_id);
+                    }
                 }
             });
     }
