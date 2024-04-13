@@ -29,7 +29,6 @@ import {UnauthorizedMiddleware} from "./unauthorized.middleware";
 import {RequestMethod} from "@nestjs/common/enums";
 import {AdminRoleMiddleware} from "./adminRole.middleware";
 import {SuperadminRoleMiddleware} from "./superadminRoleMiddleware";
-import {EventsGateway} from "./websockets/events.gateway";
 import {ProductGateway} from "./websockets/product.gateway";
 import {UserGateway} from "./websockets/user.gateway";
 
@@ -57,7 +56,6 @@ import {UserGateway} from "./websockets/user.gateway";
             provide: APP_INTERCEPTOR,
             useClass: TimingInterceptor,
         },
-        EventsGateway,
         ProductGateway,
         UserGateway
     ],
@@ -71,7 +69,7 @@ export class AppModule {
 
         consumer
             .apply(AdminRoleMiddleware)
-            .forRoutes('/news/postNews', {path: '/product/products', method: RequestMethod.POST});
+            .forRoutes('/news/postNews');
 
         consumer
             .apply(UnauthorizedMiddleware)
