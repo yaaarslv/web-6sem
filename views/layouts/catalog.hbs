@@ -39,19 +39,24 @@
             }
         });
 
-        socket.on('userUpdate', (data) => {
+        socket.on('userUpdate', async (data) => {
             const myId = localStorage.getItem("myId");
-            if (myId){
-                if (myId === data.userId){
+            if (myId) {
+                if (myId === data.userId) {
                     console.log('Received user update:', data);
                     toastr.options.timeOut = null;
                     toastr.options.positionClass = "toast-bottom-right";
-                    if (data["role"]){
+                    if (data["role"]) {
                         toastr.info(`Вам выдана роль: ${data.role}. Обновите страницу!`)
-                    } else if (data["deletedId"]){
+                    } else if (data["deletedId"]) {
                         toastr.info(`Ваш аккаунт был удалён. Обновите страницу!`)
-                    } else if (data["ban"]){
-                        toastr.info(`Ваш аккаунт был ${data.ban === "true" ? "забанен" : "разбанен"}. Обновите страницу!`)
+                    } else if (data["ban"]) {
+                        toastr.error(`Ваш аккаунт был ${data.ban === "true" ? "забанен" : "разбанен"}. Обновите страницу!`)
+                        if (data.ban === "true") {
+                            localStorage.clear();
+                            await new Promise(resolve => setTimeout(resolve, 5000));
+                            window.location.href = "index";
+                        }
                     }
                 }
             }
