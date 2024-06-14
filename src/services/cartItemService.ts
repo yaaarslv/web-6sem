@@ -41,8 +41,6 @@ export class CartItemService {
     }
 
     async changeQuantity(data): Promise<any> {
-
-
         const requiredKeys = ['cartProductId', 'newQuantity'];
 
         if (requiredKeys.every(key => key in data)) {
